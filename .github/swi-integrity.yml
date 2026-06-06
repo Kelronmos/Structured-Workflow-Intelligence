@@ -1,0 +1,29 @@
+name: SWI Cryptographic Integrity
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify-instrumentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ripgrep
+        run: sudo apt-get install -y ripgrep
+
+      - name: Enforce Trace.log Instrumentation
+        run: |
+          echo "Scanning for cryptographic modules lacking Trace.log instrumentation..."
+          # Find files mentioning crypto, proof, or verify, and list those that DO NOT have CryptoTracer.log
+          UNINSTRUMENTED=$(rg -l -i 'verify|crypto|zkproof' swi-core/ | xargs rg -L -i 'RuntimeTraceService\.log|Trace\.log' || true)
+          
+          if [ -n "$UNINSTRUMENTED" ]; then
+            echo "::error::Integrity Violation! The following modules lack required Trace.log instrumentation:"
+            echo "$UNINSTRUMENTED"
+            exit 1
+          fi
+          
+          echo "All cryptographic modules are properly instrumented with Trace.log."

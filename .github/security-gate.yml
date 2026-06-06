@@ -1,0 +1,98 @@
+name: SWI Security & Verification Gate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  security-gate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y grep ripgrep jq
+
+      - name: Block hardcoded trust flags
+        run: |
+          echo "Scanning for unsafe trust patterns..."
+
+          if rg "verified:\s*true" .; then
+            echo "ERROR: Hardcoded verified:true detected"
+            exit 1
+          fi
+
+          if rg "DEV_ZK_SALT_UNSECURE" .; then
+            echo "ERROR: insecure dev cryptographic salt detected"
+            exit 1
+          fi
+
+      - name: Block simulated cryptography
+        run: |
+          echo "Scanning for mock crypto systems..."
+
+          if rg "simulate\(|simulated|mocked|fake proof|placeholder verifier" .; then
+            echo "ERROR: Simulated cryptographic component detected"
+            exit 1
+          fi
+
+      - name: Validate ZK implementation presence
+        run: |
+          if ! rg "arkworks|halo2|plonk|noir" src/lib/zk*; then
+            echo "ERROR: No real ZK backend detected"
+            exit 1
+          fi
+
+      - name: Validate PBFT crypto enforcement
+        run: |
+          if rg "is_empty\(\)" swi-rust-monorepo/pbft-core; then
+            echo "ERROR: Unsafe PBFT proof validation detected"
+            exit 1
+          fi
+
+      - name: Validate Merkle inclusion enforcement
+        run: |
+          if ! rg "inclusion_proof|verify_inclusion|MerkleProof" .; then
+            echo "ERROR: Missing Merkle inclusion proof verification"
+            exit 1
+          fi
+
+      - name: Run TLA+ model checker
+        run: |
+          echo "Running TLC model checker..."
+
+          if [ -f "docs/SWI_CONSENSUS.tla" ]; then
+            tlc2 docs/SWI_CONSENSUS.tla || {
+              echo "ERROR: TLA+ model check failed"
+              exit 1
+            }
+          else
+            echo "WARNING: No TLA+ specification found"
+          fi
+
+      - name: Validate audit artifacts
+        run: |
+          if [ ! -d "artifacts/audit" ]; then
+            echo "ERROR: Missing audit evidence directory"
+            exit 1
+          fi
+
+          if ! ls artifacts/audit/*.csv artifacts/audit/*.md >/dev/null 2>&1; then
+            echo "ERROR: Missing required audit evidence outputs"
+            exit 1
+          fi
+
+      - name: Require trace instrumentation coverage
+        run: |
+          if ! rg "CryptoTracer.log" src/ swi-core/ swi-rust-monorepo/ pbft-core/; then
+            echo "ERROR: Missing runtime trace instrumentation"
+            exit 1
+          fi
+
+      - name: Final SWI integrity check
+        run: |
+          echo "All SWI security gates passed"

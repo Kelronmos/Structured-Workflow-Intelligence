@@ -1,0 +1,23 @@
+// .github/workflows/production.yml
+name: STMP-Production-Matrix
+
+on:
+  push:
+    branches: [ master, production ]
+
+jobs:
+  rust-prover-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install CUDA
+        run: sudo apt-get install -y nvidia-cuda-toolkit
+      - name: Build GPU Prover
+        run: cd swi-core && cargo build --release --features gpu-accelerated
+
+  node-coordinator-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy to K8s Clusters
+        run: helm upgrade --install stmp-mesh ./deploy/helm/stmp -f prod-values.yaml
