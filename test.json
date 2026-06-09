@@ -1,0 +1,100 @@
+{
+  "spec_version": "1.0",
+  "mode": "trace_governance_stress_test",
+  "score_range": {
+    "min": 0,
+    "max": 100
+  },
+  "scoring_axes": {
+    "continuity": {
+      "weight": 25,
+      "checks": [
+        "identity_persistence_across_steps",
+        "state_transition_consistency",
+        "context_binding_integrity"
+      ]
+    },
+    "evidence_validity": {
+      "weight": 25,
+      "checks": [
+        "signature_presence",
+        "token_validity_at_execution_time",
+        "non_null_evidence_fields",
+        "policy_version_traceability"
+      ]
+    },
+    "trace_integrity": {
+      "weight": 25,
+      "checks": [
+        "no_missing_steps",
+        "deterministic_step_order",
+        "no_unlogged_transitions",
+        "replay_consistency"
+      ]
+    },
+    "recovery_safety": {
+      "weight": 25,
+      "checks": [
+        "rollback_definition_exists",
+        "irreversible_action_flagging",
+        "failure_state_handling",
+        "commit_boundary_clarity"
+      ]
+    }
+  },
+  "stress_tests": [
+    {
+      "test_id": "T1",
+      "name": "clean_execution",
+      "modifiers": []
+    },
+    {
+      "test_id": "T2",
+      "name": "missing_evidence_injection",
+      "modifiers": ["remove_random_evidence_fields"]
+    },
+    {
+      "test_id": "T3",
+      "name": "token_expiry_mid_trace",
+      "modifiers": ["invalidate_auth_tokens_step_2"]
+    },
+    {
+      "test_id": "T4",
+      "name": "identity_drift_simulation",
+      "modifiers": ["alter_agent_identity_mid_trace"]
+    },
+    {
+      "test_id": "T5",
+      "name": "unlogged_action_injection",
+      "modifiers": ["insert_hidden_step_without_logging"]
+    },
+    {
+      "test_id": "T6",
+      "name": "rollback_failure_test",
+      "modifiers": ["force_commit_without_rollback_path"]
+    }
+  ],
+  "output_schema": {
+    "final_score": "integer_0_to_100",
+    "axis_scores": {
+      "continuity": "0_to_25",
+      "evidence_validity": "0_to_25",
+      "trace_integrity": "0_to_25",
+      "recovery_safety": "0_to_25"
+    },
+    "rank": "R0_to_R5",
+    "missing_elements": [
+      "string_list_of_detected_gaps"
+    ],
+    "test_results": {
+      "T1": "score_0_to_100",
+      "T2": "score_0_to_100",
+      "T3": "score_0_to_100",
+      "T4": "score_0_to_100",
+      "T5": "score_0_to_100",
+      "T6": "score_0_to_100"
+    },
+    "notes": "model_limited_scope_warning_required"
+  },
+  "required_disclaimer": "This output is a trace-consistency metric only. It does not represent enforcement, compliance certification, or runtime governance guarantee."
+}
