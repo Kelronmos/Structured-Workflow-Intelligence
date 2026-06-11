@@ -96,3 +96,8 @@ jobs:
       - name: Final SWI integrity check
         run: |
           echo "All SWI security gates passed"
+
+      - name: Generate SWI Report
+        run: |
+          echo "Capturing system state..."
+          node scripts/generate_report.js > swi_report.txt

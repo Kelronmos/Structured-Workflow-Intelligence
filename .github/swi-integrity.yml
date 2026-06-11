@@ -27,3 +27,8 @@ jobs:
           fi
           
           echo "All cryptographic modules are properly instrumented with Trace.log."
+
+      - name: Generate SWI Report
+        run: |
+          echo "Capturing system state..."
+          node scripts/generate_report.js > swi_report.txt
