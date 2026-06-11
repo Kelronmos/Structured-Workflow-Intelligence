@@ -1,29 +1,18 @@
-SWI v4.1
+# SWI v4.7 Ethical Core Stack (Research Prototype)
 
-Research and prototype governance architecture
-implementing consequence-boundary principles.
+> ⚠️ **RESEARCH PROTOTYPE ONLY**  
+> This is **not** production software. Do **NOT** use in regulated, financial, or high-stakes environments.
 
-Protected consequences require:
-- Authority
-- Admissibility
-- Boundary Admission
-- Receipt Validation
+**Status**: Educational / Research Framework  
+**Official Repository**: [Kelronmos/Structured-Workflow-Intelligence](https://github.com/Kelronmos/Structured-Workflow-Intelligence)  
+**Intended Use**: Demonstrating governance concepts, auditability, drift detection, and policy-first AI execution ideas.
 
-The system is designed so that
-inadmissible movement cannot become
-protected consequence.
+**Do not represent as**:
+- Production-ready security infrastructure
+- Cryptographically verified production system
+- Zero-trust enforcement engine
 
-> ⚠️ **Research Prototype**
->
-> SWI v4 demonstrates governance-aware execution,
-> auditability, policy enforcement concepts,
-> and educational cryptographic workflows.
->
-> Several components remain experimental,
-> mocked, or under active development.
->
-> This repository is not intended for
-> production or regulated deployment.
+See `GOVERNANCE_RULES.md` for strict guidelines.
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Security: Formal Verification](https://img.shields.io/badge/Security-TLA%2B%20Planned-yellow)](/swi-core/kernel/FormalVerificationEngine.ts)

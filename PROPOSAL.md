@@ -1,8 +1,11 @@
-SWI Foundation Proposal v1.0
-Structured Workflow Intelligence (SWI) Continuum
-Towards Universal Standards for Ethical Autonomous Systems
+# SWI v4.7 Ethical Core Stack Proposal
+## Structured Workflow Intelligence (SWI) Continuum
+**Towards Universal Standards for Ethical Autonomous Systems**
 
-Executive Summary
+> ⚠️ This document describes the **vision** and intended future direction.
+> Current implementation is a research prototype with many components simulated or partial.
+
+## Executive Summary
 Structured Workflow Intelligence (SWI) addresses a foundational gap in distributed and autonomous systems:
 
 Existing systems verify execution integrity, but not ethical justification for execution.
@@ -115,7 +118,7 @@ Open governance for policy evolution and compliance definitions
 
 
 
-4. Technical Roadmap (SWI v4.0 Alpha)
+4. Technical Roadmap (SWI v4.7 Alpha)
 Core Development Milestones:
 
 

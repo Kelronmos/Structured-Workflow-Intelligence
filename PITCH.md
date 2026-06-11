@@ -1,5 +1,9 @@
-SWI: The AI Court (Structured Workflow Intelligence)
-Problem
+# SWI: The AI Court (Structured Workflow Intelligence)
+
+> ⚠️ This document describes the **vision** and intended future direction.
+> Current implementation is a research prototype with many components simulated or partial.
+
+## Problem
 
 Modern AI systems operate without enforceable consequence awareness.
 

@@ -1,4 +1,4 @@
-# SWI Governance Spine v1.1
+# SWI v4.7 Ethical Core Stack Governance Spine
 Deterministic Runtime Policy Spine & AHMR Verification Gate
 
 This repository defines the SWI Governance Spine, a deterministic policy enforcement and audit framework for regulated workflow execution in financial and high-trust corridors.
