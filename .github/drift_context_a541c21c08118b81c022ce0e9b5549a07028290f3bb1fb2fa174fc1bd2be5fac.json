@@ -1,0 +1,26 @@
+{
+  "data": {
+    "score": 1.125,
+    "degraded": false,
+    "metrics": [
+      "BEHAVIORAL_DRIFT_DETECTED",
+      "ENVIRONMENTAL_DRIFT_DETECTED",
+      "POLICY_DRIFT_DETECTED"
+    ],
+    "report": {
+      "overallScore": 0.7474236619484885,
+      "breakdown": {
+        "behavior": 1,
+        "environment": 0.6000000000000001,
+        "policy": 0.8
+      },
+      "recommendation": "REFUSE",
+      "report": {
+        "LOCAL_ROOT": 0.7474236619484885
+      }
+    },
+    "timestamp": 1781205505692
+  },
+  "hash": "a541c21c08118b81c022ce0e9b5549a07028290f3bb1fb2fa174fc1bd2be5fac",
+  "timestamp": 1781205505727
+}

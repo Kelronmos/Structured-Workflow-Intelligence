@@ -1,0 +1,18 @@
+{
+  "rootHash": "00d3714f276f55cc937e8a8d70bd2bdfc8f47e1c21134644efc90b2f712d4514",
+  "fragments": [
+    {
+      "name": "token_action",
+      "hash": "cfbcce3eac76f70b2845732508580550b8db54bdb8ee0ee542d3a8b91e40f1ba"
+    },
+    {
+      "name": "drift_context",
+      "hash": "a541c21c08118b81c022ce0e9b5549a07028290f3bb1fb2fa174fc1bd2be5fac"
+    },
+    {
+      "name": "decision",
+      "hash": "b26976d9e1fb19bf4661fced6230e31e6d481c4b7e7e48bb76b174cda17dff1e"
+    }
+  ],
+  "createdAt": 1781205505761
+}

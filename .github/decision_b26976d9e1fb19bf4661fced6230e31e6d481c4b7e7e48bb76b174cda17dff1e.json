@@ -1,0 +1,8 @@
+{
+  "data": {
+    "decision": "REFUSE",
+    "reason": "KERNEL_HALT: SFGM_VIOLATION: MISSING_COST_OWNER_ROLLBACK_OWNER_ROLLBACK_PLAN_BOUND"
+  },
+  "hash": "b26976d9e1fb19bf4661fced6230e31e6d481c4b7e7e48bb76b174cda17dff1e",
+  "timestamp": 1781205515779
+}
