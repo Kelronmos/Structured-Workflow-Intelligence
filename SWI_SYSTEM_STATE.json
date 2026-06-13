@@ -1,0 +1,8 @@
+{
+  "status": "RESEARCH_PROTOTYPE",
+  "crypto": "SIMULATED_NON_PRODUCTION",
+  "zk": "SIMULATED",
+  "consensus": "NOT_IMPLEMENTED",
+  "risk": "DO_NOT_DEPLOY",
+  "warning": "For research and demonstration purposes only"
+}
