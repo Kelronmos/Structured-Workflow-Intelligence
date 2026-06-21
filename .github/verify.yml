@@ -31,3 +31,19 @@ jobs:
       run: |
         echo "Capturing system state..."
         node scripts/generate_report.js > swi_report.txt
+
+    - name: Generate SHA256
+      run: |
+        sha256sum dist/* > checksums.txt
+
+    - name: Sign Checksums
+      run: |
+        gpg --detach-sign checksums.txt
+
+    - name: Upload Verification Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: verification
+        path: |
+          checksums.txt
+          checksums.txt.sig

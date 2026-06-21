@@ -1,0 +1,18 @@
+name: Deploy SWI Cluster
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set kubeconfig
+        run: echo "$KUBE_CONFIG" > kubeconfig
+
+      - name: Deploy PBFT cluster
+        run: kubectl apply -f k8s/
