@@ -1,12 +1,12 @@
-# SWI v4.7 Ethical Core Stack - Release Notes
+# Structured Workflow Intelligence (SWI) V1.01 - Release Notes
 
 ## Overview
-This release finalizes the transformation of SWI into the **v4.7 Ethical Core Stack (Research Prototype)**. The focus of this release is on governance, structural integrity, and the enforcement of the "AI Court" human-in-the-loop ethical guidelines.
+This release finalizes the transformation of SWI into the **V1.01 Structured Workflow Intelligence (SWI) (Research Prototype)**. The focus of this release is on governance, structural integrity, and the enforcement of the "AI Court" human-in-the-loop ethical guidelines.
 
 ## Key Changes
 
 ### 1. Governance & Header Alignment
-*   Updated `README.md`, `README_GOVERNANCE.md`, `metadata.json`, and `PROPOSAL.md` to formally reflect the **SWI v4.7 Ethical Core Stack** positioning.
+*   Updated `README.md`, `README_GOVERNANCE.md`, `metadata.json`, and `PROPOSAL.md` to formally reflect the **Structured Workflow Intelligence (SWI) V1.01** positioning.
 *   Updated references across the application UI to maintain version consistency (e.g. `App.tsx` headers).
 
 ### 2. Manifest Standardization
@@ -18,7 +18,12 @@ This release finalizes the transformation of SWI into the **v4.7 Ethical Core St
 *   **Operational Incident Fallback**: These operations now automatically assign systemic fallbacks (`SYSTEM_DEFAULT_RECOVERY`, `SYSTEM_DEFAULT_TREASURY`) and log warnings rather than completely bricking the execution pipeline during early prototyping or demonstrations.
 *   This significantly improves the front-end simulation flow specifically for research prototyping.
 
-### 4. General Cleanup
+### 4. Verification and Proof Surfaces
+*   Introduced **No-Bind Receipts**, providing cryptographically verifiable proof when a protected effect refuses to bind, halting execution entirely.
+*   Enforced *Admissibility Check* pre-execution to validate standing before moving forward with logic.
+*   Enabled full replay logs with guaranteed deterministic chaining.
+
+### 5. General Cleanup
 *   Minor fixes to old structural artifact references.
 *   Confirmed complete JSON reporting via `generate_report.js` and matching CI actions.
 

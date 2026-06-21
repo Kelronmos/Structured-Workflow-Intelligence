@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "4.8.0",
+  "generatedAt": "2026-06-20T20:00:00Z",
+  "verification": {
+    "proofId": "SWI-MANIFEST-001",
+    "algorithm": "SHA256",
+    "hash": "<generated hash>",
+    "signerId": "SWI-CI",
+    "signature": "<signature>",
+    "verificationStatus": "VERIFIED"
+  },
+  "files": []
+}

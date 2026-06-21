@@ -1,0 +1,27 @@
+# STMP Production Node Docker Environment
+version: '3.8'
+
+services:
+  stmp-node:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PROVER_BACKEND=CUDA
+      - RECURSION_STRATEGY=NOVA_FOLDING
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+  mesh-coordinator:
+    image: node:20-slim
+    command: npm run start
+    environment:
+      - PEER_DISCOVERY=true
+    depends_on:
+      - stmp-node

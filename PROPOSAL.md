@@ -1,4 +1,4 @@
-# SWI v4.7 Ethical Core Stack Proposal
+# Structured Workflow Intelligence (SWI) V1.01 Proposal
 ## Structured Workflow Intelligence (SWI) Continuum
 **Towards Universal Standards for Ethical Autonomous Systems**
 
@@ -118,7 +118,7 @@ Open governance for policy evolution and compliance definitions
 
 
 
-4. Technical Roadmap (SWI v4.7 Alpha)
+4. Technical Roadmap (SWI V1.01 Alpha)
 Core Development Milestones:
 
 
