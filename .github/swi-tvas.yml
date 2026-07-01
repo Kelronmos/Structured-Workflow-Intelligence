@@ -1,0 +1,29 @@
+name: SWI Truth Verified Architecture Check
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Truth Kernel Violations
+        run: |
+          echo "Running SWI TVAS checks..."
+
+          FAIL=0
+
+          PATTERNS="HSM-backed|non-repudiation|zero-knowledge guarantee|cryptographic finality"
+
+          if grep -RE "$PATTERNS" src/ docs/ swi-consensus/ swi-security/ swi-zk/ --exclude-dir=node_modules; then
+            echo "❌ Overclaim detected"
+            FAIL=1
+          fi
+
+          if [ $FAIL -eq 1 ]; then
+            exit 1
+          fi
+
+          echo "✅ Truth-verified build passed"

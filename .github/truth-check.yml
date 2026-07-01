@@ -1,0 +1,27 @@
+name: SWI Truth Kernel Check
+
+on: [push, pull_request]
+
+jobs:
+  truth-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check claim alignment
+        run: |
+          echo "Scanning SWI for overclaims..."
+
+          FAIL=0
+
+          if grep -R "HSM-backed" src/ docs/; then FAIL=1; fi
+          if grep -R "non-repudiation" src/ docs/; then FAIL=1; fi
+          if grep -R "production-grade crypto" src/ docs/; then FAIL=1; fi
+
+          if [ $FAIL -eq 1 ]; then
+            echo "❌ Truth Kernel violation detected"
+            exit 1
+          fi
+
+          echo "✅ Truth Kernel passed"
