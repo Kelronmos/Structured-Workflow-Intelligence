@@ -1,0 +1,13 @@
+{
+  "receipt": {
+    "receiptId": "receipt-1781988681003",
+    "requestHash": "req-hash-abc",
+    "decisionHash": "dec-hash-def",
+    "policyVersion": "v1.0",
+    "timestamp": 1781988681003,
+    "previousReceiptHash": "prev-hash-123",
+    "signature": "1ZxJIb2WZnwcJb2oKPy+wrAO0GgM6hEAnYXQBOcCmmiibv5RN0VApiqiLbH+qtwKZUZbBRD1so625EqENK03BA==",
+    "publicKey": "qb5qtTKNvXz1OjljKUlto8X/MmYvI5waiMA4nLTUlAg=",
+    "hash": "simulated-receipt-hash"
+  }
+}
