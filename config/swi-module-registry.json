@@ -1,0 +1,292 @@
+{
+  "schema_version": "1.0.0",
+  "registry_id": "swi-module-registry",
+  "description": "Authoritative readiness control plane. SEALED modules must not be trusted production dependencies.",
+  "system_state_ref": "SWI_SYSTEM_STATE.json",
+  "manual_ref": "SWI_V3_V4_V5_BUILD_MANUAL.md",
+  "related_repositories": {
+    "v1": "Kelronmos/SWI-V1-Module-1-10",
+    "v2": "Kelronmos/SWI-V2-Modules-11-22",
+    "main": "Kelronmos/Structured-Workflow-Intelligence"
+  },
+  "rules": {
+    "trusted_dependency_states": ["INTEGRATION_READY", "SYSTEM_VERIFIED", "RELEASED"],
+    "forbid_production_ready_without_verification": true,
+    "mock_forbidden_in_production": true,
+    "sealed_not_trusted": true
+  },
+  "modules": [
+    {
+      "id": "M01",
+      "name": "node-scanner-or-runtime-probe",
+      "state": "IMPLEMENTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "verification": {
+        "contract": false,
+        "unit": false,
+        "negative": false,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M02",
+      "name": "security-probe",
+      "state": "TESTED",
+      "seal_level": 2,
+      "classification": "ADOPT",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": true,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false,
+      "notes": "V1 kernel-sealed under bounded claim; not full system security."
+    },
+    {
+      "id": "M03",
+      "name": "context-sync",
+      "state": "TESTED",
+      "seal_level": 2,
+      "classification": "ADOPT",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": true,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M04",
+      "name": "encryption-handler",
+      "state": "IMPLEMENTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": false,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M05",
+      "name": "redaction",
+      "state": "TESTED",
+      "seal_level": 2,
+      "classification": "ADOPT",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": true,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M06",
+      "name": "drift-analyzer",
+      "state": "TESTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": true,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M07",
+      "name": "memory-validator",
+      "state": "IMPLEMENTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": false,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M08",
+      "name": "access-auth",
+      "state": "TESTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": false,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false,
+      "notes": "Boolean exp / non-string sub fail-closed on V1 tip."
+    },
+    {
+      "id": "M09",
+      "name": "audit-logger",
+      "state": "TESTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": false,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M10",
+      "name": "external-sandbox",
+      "state": "IMPLEMENTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V1-Module-1-10",
+      "verification": {
+        "contract": false,
+        "unit": true,
+        "negative": true,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false,
+      "notes": "Process isolation + timeout; not full OS sandbox."
+    },
+    {
+      "id": "M11",
+      "name": "foundation-admission",
+      "state": "SEALED",
+      "seal_level": 2,
+      "classification": "HARDEN",
+      "repo_hint": "SWI-V2-Modules-11-22",
+      "verification": {
+        "contract": true,
+        "unit": true,
+        "negative": true,
+        "deterministic": true,
+        "security": true,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false,
+      "notes": "TESTED locally/CI historically; formal seal + tip CI matrix must pass before INTEGRATION_READY."
+    },
+    {
+      "id": "M12",
+      "name": "post-admission-extension",
+      "state": "SEALED",
+      "seal_level": 0,
+      "classification": "DEFER",
+      "repo_hint": "SWI-V2-Modules-11-22",
+      "verification": {
+        "contract": false,
+        "unit": false,
+        "negative": false,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false,
+      "dependencies": ["M11"],
+      "notes": "Blocked until M11 INTEGRATION_READY with evidence."
+    },
+    {
+      "id": "M13",
+      "name": "semantic-scrubber-or-equiv",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "BUILD",
+      "verification": {
+        "contract": false,
+        "unit": false,
+        "negative": false,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M14",
+      "name": "agentic-loop-governor",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "BUILD",
+      "verification": {
+        "contract": false,
+        "unit": false,
+        "negative": false,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    },
+    {
+      "id": "M15",
+      "name": "summarization-or-episodic",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "BUILD",
+      "verification": {
+        "contract": false,
+        "unit": false,
+        "negative": false,
+        "deterministic": false,
+        "security": false,
+        "integration": false
+      },
+      "production_ready": false,
+      "integration_enabled": false
+    }
+  ]
+}
