@@ -18,7 +18,7 @@ jobs:
         run: |
           echo "Scanning for cryptographic modules lacking Trace.log instrumentation..."
           # Find files mentioning crypto, proof, or verify, and list those that DO NOT have CryptoTracer.log
-          UNINSTRUMENTED=$(rg -l -i 'verify|crypto|zkproof' swi-core/ | xargs rg -L -i 'RuntimeTraceService\.log|Trace\.log' || true)
+          UNINSTRUMENTED=$(rg -l -i 'verify|crypto|zkproof' swi-core/ 2>/dev/null | xargs rg -L -i 'RuntimeTraceService\.log|Trace\.log' 2>/dev/null || true)
           
           if [ -n "$UNINSTRUMENTED" ]; then
             echo "::error::Integrity Violation! The following modules lack required Trace.log instrumentation:"
@@ -26,9 +26,7 @@ jobs:
             exit 1
           fi
           
-          echo "All cryptographic modules are properly instrumented with Trace.log."
+          echo "All cryptographic modules are properly instrumented with Trace.log (or no matching modules)."
 
-      - name: Generate SWI Report
-        run: |
-          echo "Capturing system state..."
-          node scripts/generate_report.js > swi_report.txt
+      - name: Control-plane verification
+        run: node scripts/swi-ci-check.mjs
