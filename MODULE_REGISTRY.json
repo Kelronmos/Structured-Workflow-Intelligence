@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "description": "SWI module readiness control plane. States are evidence-backed claims, not aspirations. SEALED means present but not a trusted production dependency until verification passes.",
+  "related_repositories": {
+    "foundation_v1": "Kelronmos/SWI-V1-Module-1-10",
+    "foundation_v2": "Kelronmos/SWI-V2-Modules-11-22",
+    "this_repo": "Kelronmos/Structured-Workflow-Intelligence"
+  },
+  "system_state_ref": "SWI_SYSTEM_STATE.json",
+  "modules": [
+    {
+      "id": "SWI-MAIN-RUNTIME",
+      "name": "Primary runtime / kernel (this repo)",
+      "state": "IMPLEMENTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "notes": "Research prototype; see SWI_SYSTEM_STATE.json (simulated crypto where stated). Not production."
+    },
+    {
+      "id": "SWI-V1-FOUNDATION",
+      "name": "Python foundation modules 00–10",
+      "repo": "Kelronmos/SWI-V1-Module-1-10",
+      "state": "TESTED",
+      "seal_level": 2,
+      "classification": "ADOPT",
+      "notes": "Partial seals on individual modules; foundation Seal 5 and full matrix CI remain process gates."
+    },
+    {
+      "id": "SWI-V2-M11",
+      "name": "Foundation admission boundary",
+      "repo": "Kelronmos/SWI-V2-Modules-11-22",
+      "state": "TESTED",
+      "seal_level": 2,
+      "classification": "HARDEN",
+      "notes": "Admission + travel tests; formal M11 seal requires recorded CI matrix evidence on tip."
+    },
+    {
+      "id": "SWI-CANONICAL-V0",
+      "name": "canonicalization_v0",
+      "repos": ["SWI-V1-Module-1-10", "SWI-V2-Modules-11-22"],
+      "state": "TESTED",
+      "seal_level": 1,
+      "classification": "ADOPT",
+      "notes": "Shared algorithm + golden vectors; CI-VERIFIED pending Actions on tip."
+    },
+    {
+      "id": "SWI-AUTHORITY-BOUNDARY",
+      "name": "Lane A authority non-escalation",
+      "repos": ["SWI-V1-Module-1-10", "SWI-V2-Modules-11-22"],
+      "state": "TESTED",
+      "seal_level": 1,
+      "classification": "HARDEN",
+      "notes": "Helper + tests; not full system authorization."
+    },
+    {
+      "id": "SWI-PKI",
+      "name": "Certificate lifecycle / PKI",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "BUILD",
+      "notes": "Signatures primitives may exist elsewhere; full CA/lifecycle is a gap."
+    },
+    {
+      "id": "SWI-VPN-ADAPTER",
+      "name": "VPN policy adapter",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "ADAPTER",
+      "notes": "Prefer WireGuard; SWI owns authorization/audit only."
+    },
+    {
+      "id": "SWI-SECRETS-ADAPTER",
+      "name": "Secrets / KMS adapter",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "ADAPTER",
+      "notes": "Prefer Vault/KMS; reject mock providers in production paths."
+    },
+    {
+      "id": "SWI-OBSERVABILITY",
+      "name": "Observability",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "ADAPTER",
+      "notes": "Prefer OpenTelemetry."
+    },
+    {
+      "id": "SWI-HA-DR",
+      "name": "High availability / disaster recovery",
+      "state": "PLANNED",
+      "seal_level": 0,
+      "classification": "BUILD",
+      "notes": "Manifests alone are not proof; require failure/recovery drills."
+    }
+  ],
+  "rules": {
+    "trusted_dependency_states": ["INTEGRATION_READY", "SYSTEM_VERIFIED", "RELEASED"],
+    "sealed_not_trusted": true,
+    "mock_forbidden_in_production": true
+  }
+}
