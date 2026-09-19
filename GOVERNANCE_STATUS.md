@@ -1,6 +1,6 @@
 # Governance Backbone Status
 
-**Document:** SWI-GOV-REMEDIATION-001 tracking  
+**Document:** SWI-GOV-REMEDIATION-001 / 002 tracking  
 **Date:** 2026-09-19  
 **Authority:** Governance Authority
 
@@ -12,24 +12,34 @@ governance_backbone:
   future_module_authorization: DENIED
 ```
 
-## Current progress against remediation
+## Tranche progress
 
-| Requirement | Status |
-|-------------|--------|
-| Default DENY | Enforced |
-| Source code is not authority | Enforced in code paths |
-| SEALED requires seal record | CI hard-fail + registry demoted |
-| Independent integrity comparison | Present (integrity.py) |
-| Positive admission fixture | Present |
-| Negative matrix (partial) | Expanded |
-| Execution gate | Present |
-| Policy 003 runtime | Skeleton only |
-| Route hash chain | Skeleton verifier |
-| Determinism tests | Not yet complete |
-| Isolation tests | Not yet complete |
-| Full seal-record content verification | Partial |
-| Compliance matrix | Structural skeleton |
-| Independent rediscovery | Not performed |
+| Item | Status |
+|------|--------|
+| Policy 003 route recorder | Implemented (runtime) |
+| Canonical serialization | Implemented |
+| SHA-256 route hashing | Implemented |
+| Append-only store | Implemented (file-based skeleton) |
+| Chain verification | Implemented |
+| Reconstruction | Implemented |
+| Tamper detection tests | Present |
+| Determinism (route hash) | Partial tests present |
+| Isolation suite | Not yet complete |
+| Seal-record full verification | Not yet |
+| Independent rediscovery | Not yet |
 | **SEALED** | **NOT AUTHORIZED** |
 
-No claim is made that the Governance Backbone is sealed.
+## Doctrine
+
+Implementing a control does not authorize it.  
+Passing tests does not seal it.  
+Only the complete evidence chain can support a seal decision.
+
+M12 remains blocked while `execution_authority: DENIED`.
+
+## Canonical repositories (no tracking parameters)
+
+- https://github.com/Kelronmos
+- https://github.com/Kelronmos/SWI-V1-Module-1-10
+- https://github.com/Kelronmos/SWI-V2-Modules-11-22
+- https://github.com/Kelronmos/Structured-Workflow-Intelligence
