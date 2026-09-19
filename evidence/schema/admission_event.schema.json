@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["event", "module", "action"],
+  "properties": {
+    "event": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["ADMIT", "HALT"]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "required": {
+      "type": ["string", "null"]
+    },
+    "observed": {
+      "type": ["string", "null"]
+    },
+    "dependency": {
+      "type": ["string", "null"]
+    },
+    "commit": {
+      "type": ["string", "null"]
+    },
+    "contract_sha256": {
+      "type": ["string", "null"]
+    },
+    "event_sha256": {
+      "type": ["string", "null"]
+    },
+    "checks": {
+      "type": "array",
+      "items": {"type": "string"}
+    }
+  },
+  "additionalProperties": false
+}
