@@ -1,7 +1,6 @@
 # Governance Backbone Status
 
-**Date:** 2026-09-19  
-**Authority:** Governance Authority
+**Date:** 2026-09-19
 
 ```
 governance_backbone:
@@ -11,30 +10,23 @@ governance_backbone:
   future_module_authorization: DENIED
   workflow_activation_authority: DENIED_UNLESS_VERIFIED
   m12_authorization: DENIED
+
+crypto_state_audit:
+  implementation: PRESENT (1.0-proposed)
+  deterministic_integrity: TESTS_PRESENT_NOT_FULLY_REDISCOVERED
+  storage_immutability: NOT_CLAIMED
+  non_repudiation: NOT_CLAIMED
+  factual_truth: NOT_CLAIMED
+  replay_protection: NOT_CLAIMED
+  merkle_proof: NOT_IMPLEMENTED
 ```
 
-## Invariant
+## Bounded claim in force
 
-> A workflow file is merely an artifact. Its existence, name, location, or historical presence grants it no execution authority.
+HASH ≠ TRUTH · HASH CHAIN ≠ IMMUTABLE STORAGE · DETERMINISM ≠ PURITY  
+GREEN TEST ≠ SEAL · CI SUCCESS ≠ COMPLIANCE · RECEIPT ≠ AUTHORIZATION
 
-## Tranche 2A
-
-| Control | Status |
-|---------|--------|
-| discover_workflows.py | Present |
-| verify_workflow_activation.py | Present |
-| inspect_workflow_security.py | Present (triggers, permissions, secrets, actions, deploy hints) |
-| Per-candidate machine-readable risk record | Present |
-| Activation from inspection alone | **Impossible (DENIED)** |
-| Legacy move into workflows/ | **Not performed** |
-
-## Evidence artifacts
-
-- `evidence/generated/workflow_discovery.json`
-- `evidence/generated/workflow_activation_verification.json`
-- `evidence/generated/workflow_security_inspection.json`
-
-## Canonical repos (clean URLs)
+## Canonical repos
 
 - https://github.com/Kelronmos
 - https://github.com/Kelronmos/SWI-V1-Module-1-10

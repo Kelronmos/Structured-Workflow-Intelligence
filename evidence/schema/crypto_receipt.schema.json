@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SWI Crypto Receipt",
+  "type": "object",
+  "required": [
+    "receipt_version",
+    "workflow_id",
+    "transition_id",
+    "module_id",
+    "sequence_number",
+    "payload_hash",
+    "previous_hash",
+    "state_hash"
+  ],
+  "properties": {
+    "receipt_version": { "type": "integer", "const": 1 },
+    "workflow_id": { "type": "string", "minLength": 1 },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "module_id": { "type": "string", "minLength": 1 },
+    "sequence_number": { "type": "integer", "minimum": 1 },
+    "payload_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "previous_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "state_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "recorded_at": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
