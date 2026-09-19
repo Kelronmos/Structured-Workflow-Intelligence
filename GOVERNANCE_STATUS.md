@@ -11,32 +11,44 @@ governance_backbone:
   workflow_activation_authority: DENIED_UNLESS_VERIFIED
   m12_authorization: DENIED
 
-module_10_11_boundary:
-  parallel_mock_protocol: NOT_AUTHORIZED
-  authoritative_path: "FoundationEvidenceEnvelope → admit_foundation_input → AdmittedInput"
-  verification_home: "Kelronmos/SWI-V2-Modules-11-22 (+ V1 producer)"
-  status: CONTRACT_IDENTIFIED / FULL_CROSS_REPO_SUITE_NOT_RUN_FROM_BACKBONE
+module_10_11_parallel_protocol:
+  status: NOT_AUTHORIZED
+
+module_10_11_integration:
+  implementation: NOT_VERIFIED_IN_THIS_REPO
+  contract_path: FoundationEvidenceEnvelope → M11 (V1/V2 repos)
+  cryptographic_zero_drift: NOT_CLAIMED
+  execution_gate: NOT_PROVEN_AGAINST_LIVE_M11_HERE
 
 crypto_state_audit:
   implementation: PRESENT (1.0-proposed)
-  claim: tamper-evident SHA-256 chain only
+  deterministic_integrity: TESTS_PRESENT
   storage_immutability: NOT_CLAIMED
-  merkle_proof: NOT_IMPLEMENTED
+  non_repudiation: NOT_CLAIMED
   factual_truth: NOT_CLAIMED
+  replay_protection: NOT_CLAIMED
+  merkle_proof: NOT_IMPLEMENTED
 
 policy_003:
   policy: IMPLEMENTED
   schema: IMPLEMENTED
-  runtime: SKELETON
-  verification: PARTIAL
+  runtime: PARTIAL
+  verification: NOT_FULLY_VERIFIED
+
+zip_86_package:
+  classification: RESEARCH_PROTOTYPE_ARTIFACT
+  admissible_as_production_boundary_proof: false
 ```
 
-## Doctrine
+## Invariants
 
-BUILD THE TEST AROUND THE ACTUAL CONTRACT.  
-HASH ≠ TRUTH · RECEIPT ≠ AUTHORIZATION · GREEN TEST ≠ SEAL
+- HASH ≠ TRUTH
+- HASH CHAIN ≠ IMMUTABLE STORAGE
+- RECEIPT ≠ AUTHORIZATION
+- MOCK PASS ≠ BOUNDARY PROOF
+- Discovery ≠ activation
 
-## Canonical URLs
+## Canonical URLs (no tracking parameters)
 
 - https://github.com/Kelronmos
 - https://github.com/Kelronmos/SWI-V1-Module-1-10
