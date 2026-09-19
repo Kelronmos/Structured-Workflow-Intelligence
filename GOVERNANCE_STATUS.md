@@ -13,30 +13,28 @@ governance_backbone:
 
 boundary_14stage:
   stage_1_freeze: PASS
-  stage_2_v1_producer: NOT_RUN_THIS_SESSION
-  parallel_protocol_hits_v1_v2: 0
-  authoritative_path: FoundationEvidenceEnvelope → admit_foundation_input → AdmittedInput
+  stages_2_31_forensic: PASS
+  stages_32_51: NOT_COMPLETED
+  artifact_sha256: 40657c0395a96484dff8d4b5f358c22cbb07552e086a2ddca05412ac738dd775
+  v1_commit: 32edfb52f54fce87e18ad79304791c1a6eb5b40c
+  v2_commit: a46f7656f38e187ba8c43c5b0ee545853af17c1b
+  hand_built_envelope: false
 
 v1:
   foundation_evidence: IMPLEMENTED_TESTED
+  forensic_verification: STAGES_2_31_PASS
   seal5: NOT_READY
 
 v2:
-  m11: SEALED  # repo claim; cross-repo travel still under repair stages
+  m11: SEALED
   m12:
     contract: FROZEN
     implementation: NOT_STARTED
     seal: NOT_CLAIMED
 ```
 
-## Invariants
+## Bounded claim
 
-- DO NOT BUILD THE TEST AROUND THE CLAIM
-- Real V1 envelope → real V2 M11 is the only authorized path
-- HASH ≠ TRUTH · RECEIPT ≠ AUTHORIZATION · MOCK ≠ BOUNDARY PROOF
+Real V1 producer JSON → V2 M11 → AdmittedInput verified under tested commits; tamper/missing/unsupported rejected; negative-path execution spy stayed at 0.
 
-## Canonical URLs
-
-- https://github.com/Kelronmos/SWI-V1-Module-1-10
-- https://github.com/Kelronmos/SWI-V2-Modules-11-22
-- https://github.com/Kelronmos/Structured-Workflow-Intelligence
+Not claimed: truth, production readiness, M12 seal, backbone seal.

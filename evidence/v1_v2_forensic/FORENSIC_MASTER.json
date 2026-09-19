@@ -1,0 +1,46 @@
+{
+  "document": "SWI_V1_V2_FORENSIC_REPAIR_RECORD",
+  "date": "2026-09-19",
+  "stages_completed": "2-31",
+  "stages_not_completed": "32-51",
+  "v1": {
+    "repository": "Kelronmos/SWI-V1-Module-1-10",
+    "commit": "32edfb52f54fce87e18ad79304791c1a6eb5b40c"
+  },
+  "v2": {
+    "repository": "Kelronmos/SWI-V2-Modules-11-22",
+    "commit": "a46f7656f38e187ba8c43c5b0ee545853af17c1b"
+  },
+  "artifact_sha256": "40657c0395a96484dff8d4b5f358c22cbb07552e086a2ddca05412ac738dd775",
+  "hand_built_envelope": false,
+  "results": {
+    "stage_2_producer": "PASS",
+    "stage_3_commit": "PASS",
+    "stage_5_fields": "PASS",
+    "stage_6_integrity_independent": "PASS",
+    "stage_7_11_mutation": "PASS",
+    "stage_12_16_metadata": "PASS",
+    "stage_17_21_serialization": "PASS",
+    "stage_22_transfer": "PASS",
+    "stage_23_isolation": "PASS",
+    "stage_24_25_admission": "PASS",
+    "stage_26_no_truth_upgrade": "PASS",
+    "stage_27_31_negatives": "PASS"
+  },
+  "bounded_claim": "A serialized artifact produced by the V1 Foundation Evidence producer was independently integrity-checked and admitted by V2 M11 into AdmittedInput under the tested contract; tampered or invalid inputs were rejected with execution_count remaining 0 on the negative path spy.",
+  "authority": {
+    "governance_backbone": "NOT_SEALED",
+    "execution_authority": "DENIED",
+    "m12_authorization": "DENIED",
+    "seal_decision": "NOT_AUTHORIZED"
+  },
+  "master_sha256": "3c0704d96ee39116ca771a0de9be1105753350f06478281832074fc2b4ffc2f0",
+  "limitations": [
+    "Stages 32-36 real executor instrumentation not fully mapped in this run",
+    "Stages 37-41 forensic chain hashing not complete",
+    "Stages 42-48 M12 not implemented in this run",
+    "Stages 49-51 independent rediscovery and seal decision not performed",
+    "Integrity is not factual truth",
+    "Admission is not authorization for M12/M13+"
+  ]
+}
