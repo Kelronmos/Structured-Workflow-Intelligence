@@ -1,0 +1,84 @@
+schema_version: "1.0"
+
+# Status values (only):
+# PROVEN | PARTIAL | IMPLEMENTED_NOT_VERIFIED | MISSING | NOT_APPLICABLE | BLOCKED
+#
+# No entry may claim ISO CERTIFIED / EU AI ACT COMPLIANT / GLOBALLY COMPLIANT
+# unless an independent conformity process establishes that claim.
+
+entries:
+
+  - framework: "ISO/IEC 42001:2023"
+    requirement: "AI management system governance and lifecycle"
+    jurisdiction: "International"
+    applicability: "PARTIAL"
+    repository: "Kelronmos/Structured-Workflow-Intelligence"
+    module: "Governance Backbone"
+    control: "Admission valve + seal policy + registries"
+    implementation: "admission/, governance/"
+    test: "tests/admission/"
+    ci: "governance.yml"
+    evidence: null
+    commit: null
+    status: "IMPLEMENTED_NOT_VERIFIED"
+    limitation: "Not a certified AIMS; technical controls only"
+
+  - framework: "ISO/IEC 27001:2022"
+    requirement: "Information security management — integrity and controlled change"
+    jurisdiction: "International"
+    applicability: "PARTIAL"
+    repository: "Kelronmos/Structured-Workflow-Intelligence"
+    module: "Governance Backbone"
+    control: "Integrity comparison + seal records + HALT"
+    implementation: "admission/validator.py, admission/seal_verifier.py"
+    test: "tests/admission/"
+    ci: "governance.yml"
+    evidence: null
+    commit: null
+    status: "IMPLEMENTED_NOT_VERIFIED"
+    limitation: "Not an organizational ISMS; technical integrity mechanisms only"
+
+  - framework: "NIST AI RMF 1.0"
+    requirement: "GOVERN / MAP / MEASURE / MANAGE"
+    jurisdiction: "United States (voluntary)"
+    applicability: "PARTIAL"
+    repository: "Kelronmos/Structured-Workflow-Intelligence"
+    module: "Governance Backbone"
+    control: "Registries, admission, HALT, evidence"
+    implementation: "governance/, admission/"
+    test: "tests/admission/"
+    ci: "governance.yml"
+    evidence: null
+    commit: null
+    status: "IMPLEMENTED_NOT_VERIFIED"
+    limitation: "Architectural alignment only; not a complete RMF implementation"
+
+  - framework: "EU AI Act (Regulation 2024/1689)"
+    requirement: "Article 12 — automatic recording / traceability"
+    jurisdiction: "European Union"
+    applicability: "PARTIAL"
+    repository: "Kelronmos/Structured-Workflow-Intelligence"
+    module: "Route Provenance (Policy 003)"
+    control: "Route records + evidence"
+    implementation: "admission/route_recorder.py (skeleton)"
+    test: null
+    ci: "governance.yml"
+    evidence: null
+    commit: null
+    status: "IMPLEMENTED_NOT_VERIFIED"
+    limitation: "Policy and skeleton only; full lifecycle logging not established"
+
+  - framework: "EU AI Act (Regulation 2024/1689)"
+    requirement: "Article 9 — risk management system"
+    jurisdiction: "European Union"
+    applicability: "PARTIAL"
+    repository: "Kelronmos/Structured-Workflow-Intelligence"
+    module: "Governance Backbone"
+    control: "Fail-closed gates + limitations recording"
+    implementation: "admission/, governance/"
+    test: "tests/admission/"
+    ci: "governance.yml"
+    evidence: null
+    commit: null
+    status: "MISSING"
+    limitation: "No complete Article 9 risk-management system demonstrated"
