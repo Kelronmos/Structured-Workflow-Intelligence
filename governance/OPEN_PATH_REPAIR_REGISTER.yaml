@@ -1,0 +1,176 @@
+# SWI Open-Path Repair Register
+# Generated: 2026-09-19
+# Rule: destination UNASSIGNED until dependency analysis complete
+# MODULE NUMBER ≠ EXECUTION AUTHORITY
+# SEALED COMPONENT ≠ AUTHORIZED DOWNSTREAM EXECUTION
+
+register_version: "1.0"
+default_authorization: DENIED
+default_destination: UNASSIGNED
+
+components:
+  - component_id: V1-FOUNDATION-EVIDENCE-PRODUCER
+    repository: Kelronmos/SWI-V1-Module-1-10
+    path: swi_core/foundation_evidence.py
+    current_state: IMPLEMENTED_TESTED
+    implemented: true
+    tested: true
+    verified: PARTIAL  # forensic stages 2-31 PASS; seal5 NOT_READY
+    sealed: false
+    contract: docs/FOUNDATION_EVIDENCE_PRODUCER.md
+    dependencies: [V1-TRAINER-PIPELINE]
+    consumers: [V2-M11-ADMISSION]
+    missing_controls:
+      - foundation_seal5
+      - full_independent_rediscovery_for_seal5
+    destination: UNASSIGNED  # natural position is V1 foundation, not M27+
+    authorization: DENIED
+    execution_authorized: false
+
+  - component_id: V2-M11-FOUNDATION-ADMISSION
+    repository: Kelronmos/SWI-V2-Modules-11-22
+    path: swi_v2/kernel/admission.py
+    current_state: SEALED  # per V2 MODULE_STATUS / M11_SEAL_RECORD — independent rediscovery still required for cross-repo claims
+    implemented: true
+    tested: true
+    verified: true
+    sealed: true
+    contract: docs/ADMISSION_CONTRACT.md + M11 seal manuals
+    dependencies: [V1-FOUNDATION-EVIDENCE-PRODUCER]
+    consumers: [V2-M12-NORMALIZATION]
+    missing_controls:
+      - cross_repo_CI_run_id_bound_to_forensic_artifact  # optional hardening
+    destination: M11
+    authorization: PATH_DEPENDENT  # sealed but downstream still blocked without verified consumers path
+    execution_authorized: false  # until admitted input + gate
+
+  - component_id: V2-M11-POST-ADMISSION-SEAL
+    repository: Kelronmos/SWI-V2-Modules-11-22
+    path: swi_v2/kernel/seal.py
+    current_state: IMPLEMENTED_TESTED
+    implemented: true
+    tested: true
+    verified: PARTIAL
+    sealed: false  # component path tested; not equated to M11 module seal alone
+    contract: docs/M11_CRYPTOGRAPHIC_SEAL_IMPLEMENTATION_AND_VERIFICATION_MANUAL.md
+    dependencies: [V2-M11-FOUNDATION-ADMISSION]
+    consumers: []
+    missing_controls:
+      - production_key_governance
+      - CRTG
+    destination: M11
+    authorization: DENIED
+    execution_authorized: false
+
+  - component_id: V2-M12-NORMALIZATION
+    repository: Kelronmos/SWI-V2-Modules-11-22
+    path: swi_v2/module12/__init__.py
+    current_state: CONTRACT_FROZEN_PLACEHOLDER
+    implemented: false  # accepted_placeholder only
+    tested: false  # tests assert placeholder status — not production behavior
+    verified: false
+    sealed: false
+    contract: docs/M12_CONTRACT.md
+    dependencies: [V2-M11-FOUNDATION-ADMISSION]
+    consumers: [M13-BLOCKED]
+    missing_controls:
+      - NormalizedEvidence_model
+      - deterministic_normalization
+      - positive_admission_to_normalized_path
+      - isolation_test
+      - execution_gate
+      - remove_accepted_placeholder
+    destination: M12  # contract already assigns M12; implementation NOT STARTED
+    authorization: DENIED
+    execution_authorized: false
+    false_completion_flags:
+      - accepted_placeholder
+
+  - component_id: V2-M13-THROUGH-M22-STUBS
+    repository: Kelronmos/SWI-V2-Modules-11-22
+    path: swi_v2/module13/ through module22/
+    current_state: BLOCKED
+    implemented: false
+    tested: false
+    verified: false
+    sealed: false
+    contract: null
+    dependencies: [V2-M12-NORMALIZATION]
+    consumers: []
+    missing_controls: ["entire_implementation"]
+    destination: UNASSIGNED
+    authorization: DENIED
+    execution_authorized: false
+
+  - component_id: V2-REPLAY-GUARD
+    repository: Kelronmos/SWI-V2-Modules-11-22
+    path: swi_v2/kernel/replay_guard.py
+    current_state: PARTIAL
+    implemented: true
+    tested: PARTIAL
+    verified: false
+    sealed: false
+    contract: null  # REPLAY_PROTECTION = NOT_IMPLEMENTED at production level
+    dependencies: []
+    consumers: []
+    missing_controls:
+      - durable_replay_registry
+      - formal_contract
+    destination: UNASSIGNED
+    authorization: DENIED
+    execution_authorized: false
+
+  - component_id: GOVERNANCE-CRYPTO-AUDIT
+    repository: Kelronmos/Structured-Workflow-Intelligence
+    path: swi_core/crypto_audit.py
+    current_state: IMPLEMENTED_TESTED_NOT_VERIFIED
+    implemented: true
+    tested: true
+    verified: false
+    sealed: false
+    contract: docs/CRYPTOGRAPHIC_STATE_AUDIT_CONTRACT.md
+    dependencies: []
+    consumers: []
+    missing_controls:
+      - isolation_clean_checkout
+      - independent_rediscovery
+      - golden_vectors_frozen
+    destination: UNASSIGNED
+    authorization: DENIED
+    execution_authorized: false
+
+  - component_id: GOVERNANCE-ROUTE-PROVENANCE
+    repository: Kelronmos/Structured-Workflow-Intelligence
+    path: admission/route_chain.py
+    current_state: PARTIAL
+    implemented: true
+    tested: PARTIAL
+    verified: false
+    sealed: false
+    contract: governance/POLICY_003_ROUTE_PROVENANCE.md
+    dependencies: []
+    consumers: []
+    missing_controls:
+      - full_operation_coverage
+      - production_append_only_store
+    destination: UNASSIGNED
+    authorization: DENIED
+    execution_authorized: false
+
+path_authorization_examples:
+  - destination: M12
+    required_path: [M11]
+    verified:
+      M11: true
+    execution_authorized: false  # M12 implementation missing
+  - destination: M13
+    required_path: [M11, M12]
+    verified:
+      M11: true
+      M12: false
+    execution_authorized: false
+  - destination: M27
+    required_path: UNKNOWN
+    verified: {}
+    execution_authorized: false
+    note: Do not invent path; UNASSIGNED until function/contract/dependency discovery
