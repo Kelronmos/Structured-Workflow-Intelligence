@@ -6,13 +6,13 @@ The following versions are currently maintained and eligible for security update
 
 | Version | Supported         |
 | ------- | ----------------- |
-| 5.x     | ✅                 |
+| 5.x     | ✅ Research support |
 | 4.x     | ✅ Limited Support |
 | < 4.0   | ❌ End of Life     |
 
 ### Support Definitions
 
-* **Full Support** – Security fixes, bug fixes, and critical governance updates.
+* **Full Support** – Security fixes, bug fixes, and critical governance updates (research track).
 * **Limited Support** – Critical security fixes only.
 * **End of Life (EOL)** – No security or maintenance updates.
 
@@ -61,101 +61,66 @@ Please include:
 
 ### Critical
 
-Examples:
-
-* Governance bypass
-* Policy engine compromise
-* Receipt forgery
-* Audit trail manipulation
-* Remote code execution
-
+Examples: governance bypass, policy engine compromise, receipt forgery, audit trail manipulation, remote code execution.  
 Target remediation: 7–30 days
 
 ### High
 
-Examples:
-
-* Privilege escalation
-* Authentication weaknesses
-* Cryptographic implementation flaws
-* Data integrity violations
-
+Examples: privilege escalation, authentication weaknesses, cryptographic implementation flaws, data integrity violations.  
 Target remediation: 30–60 days
 
 ### Medium
 
-Examples:
-
-* Information disclosure
-* Security misconfiguration
-* Non-critical denial of service
-
+Examples: information disclosure, security misconfiguration, non-critical denial of service.  
 Target remediation: 60–90 days
 
 ### Low
 
-Examples:
-
-* Documentation errors
-* Non-exploitable weaknesses
-* Minor hardening opportunities
-
+Examples: documentation errors, non-exploitable weaknesses, minor hardening.  
 Target remediation: Best effort
 
 ---
 
 ## Scope
 
-The following SWI components are considered security-sensitive:
+Security-sensitive areas (when implemented):
 
-* Truth Kernel
+* Truth Kernel / decision kernel
 * Policy Engine
-* Receipt Chain
-* Audit Ledger
-* Identity and Authorization Components
-* Cryptographic Modules
-* Governance Enforcement Controls
+* Receipt / audit chain
+* Identity and authorization
+* Cryptographic modules
+* Governance enforcement controls
+* Module registry and seal gate
 
 ---
 
 ## Safe Harbor
 
-The project welcomes good-faith security research.
-
-Researchers who:
-
-* Avoid privacy violations
-* Avoid service disruption
-* Avoid data destruction
-* Act responsibly
-
-will not be considered to be acting maliciously.
+Good-faith research that avoids privacy violations, service disruption, and data destruction is welcome and will not be treated as malicious.
 
 ---
 
-## Security Roadmap
-
-Current security priorities include:
+## Security Roadmap (research priorities)
 
 * Formal verification of deterministic kernel behavior
 * STRIDE threat modeling
-* TPM/HSM trust anchor integration
-* Cryptographic hardening
-* Receipt-chain integrity verification
+* TPM/HSM trust anchor integration (future)
+* Cryptographic hardening with evidence
+* Receipt-chain integrity verification tests
 * Cross-runtime determinism testing
-
-Security improvements are tracked publicly through the project's Security Roadmap and GitHub Issues.
+* Evidence-backed module sealing (`scripts/swi-seal.mjs`)
 
 ---
 
-## Disclaimer
+## Disclaimer (authoritative)
 
-SWI is currently an evolving platform and portions of the system may be classified as:
+SWI is a **research prototype**. See `SWI_SYSTEM_STATE.json`:
 
-* VERIFIED
-* PARTIAL
-* SIMULATED
+* `status`: RESEARCH_PROTOTYPE
+* `risk`: DO_NOT_DEPLOY
 
-as documented within the repository.
+Portions may be REAL, HYBRID, or SIMULATED.  
+**Do not deploy as production security infrastructure** without independent verification that exceeds this repository’s claims.
 
-Users should review component maturity levels before deploying SWI in production environments.
+Maturity labels (VERIFIED / PARTIAL / SIMULATED) must match executable evidence. Documentation alone is not verification.
