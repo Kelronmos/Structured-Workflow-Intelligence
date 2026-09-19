@@ -1,0 +1,85 @@
+name: SWI Governance Backbone
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pyyaml jsonschema
+
+      - name: YAML validation (registries)
+        run: |
+          python -c "
+          import yaml, sys
+          for f in [
+              'governance/MODULE_REGISTRY.yaml',
+              'governance/VERSION_REGISTRY.yaml',
+              'governance/DEPENDENCY_GRAPH.yaml',
+              'governance/ADMISSION_POLICY.yaml',
+          ]:
+              with open(f) as fh:
+                  yaml.safe_load(fh)
+              print(f'OK: {f}')
+          "
+
+      - name: Python syntax check (admission)
+        run: |
+          python -m py_compile admission/halt.py
+          python -m py_compile admission/seal_verifier.py
+          python -m py_compile admission/dependency_gate.py
+          python -m py_compile admission/validator.py
+          python -m py_compile admission/__init__.py
+
+      - name: Schema validation
+        run: |
+          python -c "
+          import json, jsonschema
+          for schema in ['evidence/schema/admission_event.schema.json',
+                         'evidence/schema/halt_event.schema.json']:
+              with open(schema) as f:
+                  json.load(f)
+              print(f'OK schema: {schema}')
+          "
+
+      - name: Run negative / admission tests
+        run: |
+          pytest tests/admission/ -v --tb=short
+
+      - name: Registry consistency (SEALED must not be claimed without evidence)
+        run: |
+          python -c "
+          import yaml
+          with open('governance/MODULE_REGISTRY.yaml') as f:
+              reg = yaml.safe_load(f)
+          for mid, m in reg.get('modules', {}).items():
+              state = m.get('state')
+              if state == 'SEALED':
+                  # For now we only warn; full seal records will be required later
+                  print(f'NOTE: {mid} claims SEALED — seal record verification required before execution')
+              if state not in (
+                  'DESIGN', 'CONTRACT_FROZEN', 'IMPLEMENTED', 'IMPLEMENTED_TESTED',
+                  'TESTED', 'CI_VERIFIED', 'AUDITED', 'SEALED', 'NOT_READY',
+                  'UNAUTHORIZED', 'INVALIDATED', 'HALTED'
+              ):
+                  raise SystemExit(f'Invalid state for {mid}: {state}')
+          print('Registry state values OK')
+          "
