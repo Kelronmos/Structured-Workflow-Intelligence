@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SWI Route Provenance Record",
+  "type": "object",
+  "required": [
+    "route_id",
+    "operation_id",
+    "origin",
+    "result",
+    "route_hash"
+  ],
+  "properties": {
+    "route_id": { "type": "string" },
+    "operation_id": { "type": "string" },
+    "actor": { "type": ["string", "null"] },
+    "authority": { "type": ["string", "null"] },
+    "origin": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": ["string", "null"] },
+        "commit": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "route": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "node": { "type": ["string", "null"] },
+          "type": { "type": ["string", "null"] },
+          "repository": { "type": ["string", "null"] },
+          "module": { "type": ["string", "null"] },
+          "interface": { "type": ["string", "null"] },
+          "operation": { "type": ["string", "null"] },
+          "timestamp": { "type": ["string", "null"] },
+          "integrity_reference": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "destination": {
+      "type": "object",
+      "properties": {
+        "repository": { "type": ["string", "null"] },
+        "module": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "purpose": { "type": ["string", "null"] },
+    "contract": {
+      "type": "object",
+      "properties": {
+        "id": { "type": ["string", "null"] },
+        "version": { "type": ["string", "null"] },
+        "sha256": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "result": {
+      "type": "string",
+      "enum": ["ADMITTED", "REJECTED", "HALTED"]
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "evidence_id": { "type": ["string", "null"] },
+        "sha256": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "parent_route": { "type": ["string", "null"] },
+    "previous_route_hash": { "type": ["string", "null"] },
+    "route_hash": { "type": "string" }
+  },
+  "additionalProperties": false
+}
