@@ -1,0 +1,100 @@
+# Machine-readable module authority invariant
+# Date: 2026-09-19
+# Status: MANDATORY
+# Documentation: governance/MODULE_AUTHORITY_BOUNDARY.md
+
+invariant_id: SWI-MODULE-AUTHORITY-BOUNDARY-001
+status: MANDATORY
+
+governing_statement: >
+  No module may acquire, inherit, delegate, or exercise authority outside its
+  frozen contract, approved dependency position, and explicitly verified workflow
+  path. Module promotion, renumbering, relocation, or downstream assignment shall
+  not itself expand authority or alter an existing workflow.
+
+separations:
+  - MODULE_EXISTENCE
+  - MODULE_AUTHORITY
+  - TASK_AUTHORITY
+  - WORKFLOW_AUTHORITY
+  - EXECUTION_AUTHORITY
+
+equality_forbidden:
+  - [MODULE_EXISTENCE, MODULE_AUTHORITY]
+  - [MODULE_AUTHORITY, TASK_AUTHORITY]
+  - [TASK_AUTHORITY, WORKFLOW_AUTHORITY]
+  - [WORKFLOW_AUTHORITY, EXECUTION_AUTHORITY]
+  - [SEALED, AUTHORIZED]
+  - [SEALED, EXECUTABLE]
+  - [CAN_PERFORM, MAY_PERFORM]
+  - [MAY_PERFORM, MAY_CHANGE_WORKFLOW]
+  - [MODULE_NUMBER, EXECUTION_AUTHORITY]
+
+states:
+  FROZEN: contract_and_interface_fixed
+  SEALED: bounded_contract_independently_verified
+  AUTHORIZED: dependency_path_verified_and_admitted
+  EXECUTABLE: authorized_execution_gate_passed
+
+path_rule: NO_VERIFIED_PATH_EQUALS_NO_EXECUTION
+
+placement_pipeline:
+  - STRUCTURE
+  - MODULE_FUNCTION_IDENTIFIED
+  - CONTRACT_FROZEN
+  - AUTHORITY_SCOPE_DEFINED
+  - DEPENDENCY_PATH_VERIFIED
+  - MODULE_PLACEMENT_APPROVED
+  - MODULE_FROZEN_OR_SEALED
+  - AUTHORITY_BOUNDARY  # hard stop
+  - WORKFLOW_MAY_USE_MODULE_ONLY_THROUGH_VERIFIED_PATH
+
+relocation_protocol:
+  trigger: MODULE_MOVE_OR_RENAME_OR_RENUMBER
+  steps:
+    - COMPARE_OLD_CONTRACT
+    - COMPARE_NEW_POSITION
+    - COMPARE_DEPENDENCIES
+    - COMPARE_AUTHORITY_SCOPE
+    - COMPARE_WORKFLOW_EFFECT
+  if_authority_or_workflow_changes: NEW_AUTHORIZATION_REQUIRED
+  else: PRESERVE_ORIGINAL_AUTHORITY
+  on_unexpected_change:
+    - HALT
+    - change_record
+    - impact_report
+    - dependency_report
+    - workflow_diff
+    - cryptographic_hash
+
+workflow_change_check_schema:
+  module_identity_changed: boolean
+  contract_changed: boolean
+  authority_scope_changed: boolean
+  predecessor_changed: boolean
+  successor_changed: boolean
+  execution_path_changed: boolean
+  admission_rules_changed: boolean
+  policy_effect_changed: boolean
+  workflow_effect: [NONE, HALT, REQUIRES_REAUTH]
+
+default_on_unexpected_workflow_field: HALT
+
+examples:
+  - name: m27_to_m30_without_reauth
+    action: assign_component_from_M27_shaped_to_M30
+    inferred_authority_grant: FORBIDDEN
+    required: explicit_destination_approval_after_comparisons
+
+forbidden:
+  - promote_because_technically_capable
+  - infer_authority_from_module_number
+  - infer_execution_from_sealed_status
+  - alter_workflow_by_relocation_alone
+  - stages_2_31_as_downstream_authorization
+
+authority_after_this_document:
+  governance_backbone: NOT_SEALED
+  execution_authority: DENIED
+  m12_authorization: DENIED
+  seal_decision: NOT_AUTHORIZED
