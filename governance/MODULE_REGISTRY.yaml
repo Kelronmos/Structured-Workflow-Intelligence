@@ -1,38 +1,45 @@
 schema_version: "1.0"
 
+# IMPORTANT:
+# state: SEALED is forbidden unless a corresponding seal record exists under
+# governance/seal_records/<MODULE_ID>.{yaml|json|md}
+# CI will FAIL on any SEALED entry without a seal record.
+# Until independent seal records are produced, modules remain at most
+# IMPLEMENTED_TESTED / CONTRACT_FROZEN / etc.
+
 modules:
 
   V1-M02:
     version: V1
     module: M02
     name: "Validated Input Boundary"
-    state: SEALED
+    state: IMPLEMENTED_TESTED
     authority: "SWI-V1-Module-1-10"
-    limitation: "Bounded module seal; not global certification"
+    limitation: "Previously claimed SEALED; demoted pending independent seal record"
 
   V1-M03:
     version: V1
     module: M03
     name: "Structured Intake"
-    state: SEALED
+    state: IMPLEMENTED_TESTED
     authority: "SWI-V1-Module-1-10"
-    limitation: "Bounded module seal; not global certification"
+    limitation: "Previously claimed SEALED; demoted pending independent seal record"
 
   V1-M05:
     version: V1
     module: M05
     name: "Structured Processing"
-    state: SEALED
+    state: IMPLEMENTED_TESTED
     authority: "SWI-V1-Module-1-10"
-    limitation: "Bounded module seal; not global certification"
+    limitation: "Previously claimed SEALED; demoted pending independent seal record"
 
   V1-M06:
     version: V1
     module: M06
     name: "Controlled Execution Boundary"
-    state: SEALED
+    state: IMPLEMENTED_TESTED
     authority: "SWI-V1-Module-1-10"
-    limitation: "Bounded module seal; not global certification"
+    limitation: "Previously claimed SEALED; demoted pending independent seal record"
 
   V1-M11:
     version: V1
@@ -46,9 +53,9 @@ modules:
     version: V2
     module: M11
     name: "Admission Boundary"
-    state: SEALED
+    state: IMPLEMENTED_TESTED
     authority: "SWI-V2-Modules-11-22"
-    limitation: "Bounded admission seal"
+    limitation: "Previously claimed SEALED; demoted pending independent seal record and full verification"
 
   V2-M12:
     version: V2
