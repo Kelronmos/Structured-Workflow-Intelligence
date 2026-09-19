@@ -10,29 +10,31 @@ governance_backbone:
   cross_repository_admission: DENIED_UNLESS_VERIFIED
   future_module_authorization: DENIED
   workflow_activation_authority: DENIED_UNLESS_VERIFIED
+  m12_authorization: DENIED
 ```
 
-## Workflow discovery doctrine
+## Invariant
 
-- Only `.github/workflows/*` is executed by GitHub Actions.
-- Legacy `.github/*.yml` files are **INACTIVE_WORKFLOW_CANDIDATE** until classified, reviewed, and explicitly authorized.
-- Scripts: `scripts/discover_workflows.py`, `scripts/verify_workflow_activation.py`
-- Evidence: `evidence/generated/workflow_discovery.json`, `workflow_activation_verification.json`
+> A workflow file is merely an artifact. Its existence, name, location, or historical presence grants it no execution authority.
 
-## Tranche progress
+## Tranche 2A
 
-| Item | Status |
-|------|--------|
-| Policy 003 route runtime | Implemented (skeleton store) |
-| Route tests + verify script | Present |
-| Determinism (route) | Partial |
-| Isolation suite | Not complete |
-| Workflow discovery/classify | Implemented |
-| Workflow activation gate | Implemented (default DENY) |
-| Legacy workflow activation | **NOT AUTHORIZED** |
-| Seal candidate | **DENIED** |
+| Control | Status |
+|---------|--------|
+| discover_workflows.py | Present |
+| verify_workflow_activation.py | Present |
+| inspect_workflow_security.py | Present (triggers, permissions, secrets, actions, deploy hints) |
+| Per-candidate machine-readable risk record | Present |
+| Activation from inspection alone | **Impossible (DENIED)** |
+| Legacy move into workflows/ | **Not performed** |
 
-## Canonical repos (no tracking parameters)
+## Evidence artifacts
+
+- `evidence/generated/workflow_discovery.json`
+- `evidence/generated/workflow_activation_verification.json`
+- `evidence/generated/workflow_security_inspection.json`
+
+## Canonical repos (clean URLs)
 
 - https://github.com/Kelronmos
 - https://github.com/Kelronmos/SWI-V1-Module-1-10

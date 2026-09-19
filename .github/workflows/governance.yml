@@ -42,7 +42,7 @@ jobs:
               print(f'OK: {f}')
           "
 
-      - name: Python syntax check (admission + scripts)
+      - name: Python syntax check
         run: |
           python -m py_compile admission/halt.py
           python -m py_compile admission/seal_verifier.py
@@ -56,6 +56,7 @@ jobs:
           python -m py_compile admission/__init__.py
           python -m py_compile scripts/discover_workflows.py
           python -m py_compile scripts/verify_workflow_activation.py
+          python -m py_compile scripts/inspect_workflow_security.py
           python -m py_compile scripts/verify_route_chain.py
 
       - name: Schema validation
@@ -81,6 +82,9 @@ jobs:
       - name: Run determinism tests
         run: pytest tests/determinism/ -v --tb=short
 
+      - name: Run workflow gate tests
+        run: pytest tests/governance/ -v --tb=short
+
       - name: Verify route chain
         run: python scripts/verify_route_chain.py
 
@@ -89,6 +93,9 @@ jobs:
 
       - name: Verify workflow activation gate
         run: python scripts/verify_workflow_activation.py
+
+      - name: Inspect workflow security (no activation)
+        run: python scripts/inspect_workflow_security.py
 
       - name: Registry consistency — SEALED requires seal record (HARD FAIL)
         run: |
