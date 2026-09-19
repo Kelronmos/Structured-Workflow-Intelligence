@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/swi-seal-record.schema.json",
+  "title": "SWI Seal Record",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "module_id",
+    "status",
+    "source",
+    "commit",
+    "run",
+    "checks",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "module_id": {
+      "type": "string",
+      "pattern": "^M[0-9]{2}$"
+    },
+    "status": {
+      "type": "string",
+      "const": "PASS"
+    },
+    "source": {
+      "type": "object",
+      "required": ["repository"],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,64}$"
+    },
+    "run": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "contract",
+        "unit",
+        "negative",
+        "deterministic",
+        "security",
+        "reproducible"
+      ],
+      "properties": {
+        "contract": { "const": true },
+        "unit": { "const": true },
+        "negative": { "const": true },
+        "deterministic": { "const": true },
+        "security": { "const": true },
+        "reproducible": { "const": true }
+      },
+      "additionalProperties": false
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}
