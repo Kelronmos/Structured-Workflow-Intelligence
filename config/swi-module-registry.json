@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "registry_id": "swi-module-registry",
-  "description": "Authoritative readiness control plane. SEALED modules must not be trusted production dependencies.",
+  "description": "Authoritative readiness control plane. SEALED modules must not be trusted production dependencies. MAPPED ≠ FROZEN ≠ SEALED ≠ AUTHORIZED.",
   "system_state_ref": "SWI_SYSTEM_STATE.json",
   "manual_ref": "SWI_V3_V4_V5_BUILD_MANUAL.md",
   "related_repositories": {
@@ -13,7 +13,8 @@
     "trusted_dependency_states": ["INTEGRATION_READY", "SYSTEM_VERIFIED", "RELEASED"],
     "forbid_production_ready_without_verification": true,
     "mock_forbidden_in_production": true,
-    "sealed_not_trusted": true
+    "sealed_not_trusted": true,
+    "module_number_is_not_permission": true
   },
   "modules": [
     {
@@ -220,7 +221,7 @@
     {
       "id": "M12",
       "name": "post-admission-extension",
-      "state": "SEALED",
+      "state": "CONTRACT_FROZEN",
       "seal_level": 0,
       "classification": "DEFER",
       "repo_hint": "SWI-V2-Modules-11-22",
@@ -235,7 +236,7 @@
       "production_ready": false,
       "integration_enabled": false,
       "dependencies": ["M11"],
-      "notes": "Blocked until M11 INTEGRATION_READY with evidence."
+      "notes": "Implementation not started. Blocked until M11 INTEGRATION_READY with evidence. Previously mis-marked SEALED; corrected 2026-09-19. SEALED ≠ AUTHORIZED ≠ EXECUTABLE."
     },
     {
       "id": "M13",
