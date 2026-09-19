@@ -1,0 +1,94 @@
+schema_version: "1.0"
+
+modules:
+
+  V1-M02:
+    version: V1
+    module: M02
+    name: "Validated Input Boundary"
+    state: SEALED
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Bounded module seal; not global certification"
+
+  V1-M03:
+    version: V1
+    module: M03
+    name: "Structured Intake"
+    state: SEALED
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Bounded module seal; not global certification"
+
+  V1-M05:
+    version: V1
+    module: M05
+    name: "Structured Processing"
+    state: SEALED
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Bounded module seal; not global certification"
+
+  V1-M06:
+    version: V1
+    module: M06
+    name: "Controlled Execution Boundary"
+    state: SEALED
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Bounded module seal; not global certification"
+
+  V1-M11:
+    version: V1
+    module: M11
+    name: "Continuity Lock"
+    state: IMPLEMENTED_TESTED
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Not Foundation Seal 5"
+
+  V2-M11:
+    version: V2
+    module: M11
+    name: "Admission Boundary"
+    state: SEALED
+    authority: "SWI-V2-Modules-11-22"
+    limitation: "Bounded admission seal"
+
+  V2-M12:
+    version: V2
+    module: M12
+    name: "Evidence Normalization"
+    state: CONTRACT_FROZEN
+    authority: "SWI-V2-Modules-11-22"
+    limitation: "Implementation not started"
+
+  V1-FOUNDATION-SEAL-5:
+    version: V1
+    module: FOUNDATION-SEAL-5
+    state: NOT_READY
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Not sealed"
+
+  V1-CRTG:
+    version: V1
+    module: CRTG
+    state: DESIGN
+    authority: "SWI-V1-Module-1-10"
+    limitation: "Design only"
+
+  V2-M13:
+    version: V2
+    module: M13
+    state: UNAUTHORIZED
+    authority: null
+    limitation: "No dependency requirement established"
+
+  V2-M14:
+    version: V2
+    module: M14
+    state: UNAUTHORIZED
+    authority: null
+    limitation: "No dependency requirement established"
+
+  V2-M15:
+    version: V2
+    module: M15
+    state: UNAUTHORIZED
+    authority: null
+    limitation: "No dependency requirement established"

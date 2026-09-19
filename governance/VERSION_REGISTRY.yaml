@@ -1,0 +1,27 @@
+schema_version: "1.0"
+
+versions:
+
+  V1:
+    state: EVIDENCE_SOURCE
+    repository: "Kelronmos/SWI-V1-Module-1-10"
+    authority: "bounded upstream evidence"
+    foundation_seal_5: NOT_READY
+
+  V2:
+    state: ACTIVE_DEVELOPMENT
+    repository: "Kelronmos/SWI-V2-Modules-11-22"
+    current_module: M12
+    current_gate: CONTRACT_FROZEN
+
+  V3:
+    state: GOVERNANCE_RESERVED
+    implementation: NOT_STARTED
+
+  V4:
+    state: GOVERNANCE_RESERVED
+    implementation: NOT_STARTED
+
+  V5:
+    state: DECLARED_ONLY
+    implementation: NOT_VERIFIED

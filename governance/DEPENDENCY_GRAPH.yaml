@@ -1,0 +1,23 @@
+schema_version: "1.0"
+
+edges:
+
+  - from: V1-M11
+    to: V2-M11
+    requirement: "serialized foundation evidence"
+
+  - from: V2-M11
+    to: V2-M12
+    requirement: "valid AdmittedInput"
+
+  - from: V2-M12
+    to: V2-M13
+    requirement: "M12 SEALED and contract-compatible"
+
+  - from: V2-M13
+    to: V2-M14
+    requirement: "M13 SEALED and contract-compatible"
+
+  - from: V2-M14
+    to: V2-M15
+    requirement: "M14 SEALED and contract-compatible"

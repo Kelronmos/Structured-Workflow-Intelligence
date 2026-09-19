@@ -1,0 +1,32 @@
+schema_version: "1.0"
+
+default_action: DENY
+
+required_checks:
+
+  - STRUCTURE
+  - CONTRACT
+  - VERSION
+  - INTEGRITY
+  - SEAL
+  - DEPENDENCY
+
+failure_action: HALT
+
+execution_requires:
+  - all_required_checks_pass
+  - exact_commit_match
+  - exact_contract_hash_match
+  - valid_seal_record
+  - dependencies_sealed
+
+forbidden:
+
+  - trust_by_flag
+  - trust_by_readme
+  - trust_by_module_status
+  - trust_by_version_number
+  - trust_by_import_success
+  - silent_dependency_upgrade
+  - silent_contract_upgrade
+  - execution_after_failed_validation
