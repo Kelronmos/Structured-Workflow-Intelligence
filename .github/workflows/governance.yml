@@ -42,19 +42,21 @@ jobs:
               print(f'OK: {f}')
           "
 
-      - name: Python syntax check (admission)
+      - name: Python syntax check (admission + scripts)
         run: |
           python -m py_compile admission/halt.py
           python -m py_compile admission/seal_verifier.py
           python -m py_compile admission/dependency_gate.py
           python -m py_compile admission/validator.py
           python -m py_compile admission/execution_gate.py
-          python -m py_compile admission/route_recorder.py
           python -m py_compile admission/route_canonical.py
           python -m py_compile admission/route_store.py
           python -m py_compile admission/route_chain.py
           python -m py_compile admission/integrity.py
           python -m py_compile admission/__init__.py
+          python -m py_compile scripts/discover_workflows.py
+          python -m py_compile scripts/verify_workflow_activation.py
+          python -m py_compile scripts/verify_route_chain.py
 
       - name: Schema validation
         run: |
@@ -79,34 +81,29 @@ jobs:
       - name: Run determinism tests
         run: pytest tests/determinism/ -v --tb=short
 
-      - name: Verify route chain script
+      - name: Verify route chain
         run: python scripts/verify_route_chain.py
+
+      - name: Discover workflows (classify only)
+        run: python scripts/discover_workflows.py
+
+      - name: Verify workflow activation gate
+        run: python scripts/verify_workflow_activation.py
 
       - name: Registry consistency — SEALED requires seal record (HARD FAIL)
         run: |
           python -c "
           import yaml, sys
           from pathlib import Path
-
           with open('governance/MODULE_REGISTRY.yaml') as f:
               reg = yaml.safe_load(f)
-
           seal_dir = Path('governance/seal_records')
-          missing = []
-          for mid, m in reg.get('modules', {}).items():
-              if m.get('state') == 'SEALED':
-                  candidates = [
-                      seal_dir / f'{mid}.yaml',
-                      seal_dir / f'{mid}.json',
-                      seal_dir / f'{mid}.md',
-                  ]
-                  if not any(p.exists() for p in candidates):
-                      missing.append(mid)
-
+          missing = [mid for mid, m in reg.get('modules', {}).items()
+                     if m.get('state') == 'SEALED' and not any(
+                         (seal_dir / f'{mid}{ext}').exists()
+                         for ext in ('.yaml', '.json', '.md'))]
           if missing:
-              print('ERROR: SEALED modules without seal records:')
-              for m in missing:
-                  print(f'  - {m}')
+              print('ERROR: SEALED without seal records:', missing)
               sys.exit(1)
           print('Registry SEALED consistency OK')
           "
