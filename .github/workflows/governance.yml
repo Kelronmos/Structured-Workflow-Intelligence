@@ -47,39 +47,57 @@ jobs:
           python -m py_compile admission/seal_verifier.py
           python -m py_compile admission/dependency_gate.py
           python -m py_compile admission/validator.py
+          python -m py_compile admission/execution_gate.py
+          python -m py_compile admission/route_recorder.py
           python -m py_compile admission/__init__.py
 
       - name: Schema validation
         run: |
           python -c "
-          import json, jsonschema
-          for schema in ['evidence/schema/admission_event.schema.json',
-                         'evidence/schema/halt_event.schema.json']:
+          import json
+          for schema in [
+              'evidence/schema/admission_event.schema.json',
+              'evidence/schema/halt_event.schema.json',
+              'evidence/schema/route_record.schema.json',
+          ]:
               with open(schema) as f:
                   json.load(f)
               print(f'OK schema: {schema}')
           "
 
-      - name: Run negative / admission tests
+      - name: Run admission tests (negative + positive)
         run: |
           pytest tests/admission/ -v --tb=short
 
-      - name: Registry consistency (SEALED must not be claimed without evidence)
+      - name: Registry consistency — SEALED requires seal record (HARD FAIL)
         run: |
           python -c "
-          import yaml
+          import yaml, sys, os
+          from pathlib import Path
+
           with open('governance/MODULE_REGISTRY.yaml') as f:
               reg = yaml.safe_load(f)
+
+          seal_dir = Path('governance/seal_records')
+          missing = []
           for mid, m in reg.get('modules', {}).items():
               state = m.get('state')
               if state == 'SEALED':
-                  # For now we only warn; full seal records will be required later
-                  print(f'NOTE: {mid} claims SEALED — seal record verification required before execution')
-              if state not in (
-                  'DESIGN', 'CONTRACT_FROZEN', 'IMPLEMENTED', 'IMPLEMENTED_TESTED',
-                  'TESTED', 'CI_VERIFIED', 'AUDITED', 'SEALED', 'NOT_READY',
-                  'UNAUTHORIZED', 'INVALIDATED', 'HALTED'
-              ):
-                  raise SystemExit(f'Invalid state for {mid}: {state}')
-          print('Registry state values OK')
+                  # Require a corresponding seal record file
+                  candidates = [
+                      seal_dir / f'{mid}.yaml',
+                      seal_dir / f'{mid}.json',
+                      seal_dir / f'{mid}.md',
+                  ]
+                  if not any(p.exists() for p in candidates):
+                      missing.append(mid)
+
+          if missing:
+              print('ERROR: SEALED modules without seal records:')
+              for m in missing:
+                  print(f'  - {m}')
+              print('CI FAIL: SEALED without seal record is forbidden')
+              sys.exit(1)
+
+          print('Registry SEALED consistency OK (or no SEALED entries without records)')
           "

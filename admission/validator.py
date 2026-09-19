@@ -9,6 +9,8 @@ Order is mandatory and non-negotiable:
   6. DEPENDENCY
 
 NO FALLTHROUGH. Any failure → HALT. Execution never occurs after HALT.
+
+Integrity is derived/compared, never merely asserted by the candidate.
 """
 
 from __future__ import annotations
@@ -49,16 +51,81 @@ def validate_version(candidate: dict, version_registry: dict) -> dict:
 
 
 def validate_integrity(candidate: dict) -> dict:
-    # Placeholder for full integrity (commit match, content hash, etc.)
-    # Real implementation must compare against expected commit / content hash.
-    if candidate.get("integrity_verified") is False:
-        mid = candidate.get("module") or "UNKNOWN"
-        return halt(mid, "INTEGRITY_FAILURE", "verified", "failed")
+    """Integrity must be derived or explicitly compared, never merely asserted.
+
+    Accepted paths:
+    - candidate supplies expected_commit + actual_commit and they match
+    - candidate supplies expected_contract_sha256 + actual_contract_sha256 and they match
+    - or both
+
+    Forbidden:
+    - integrity_verified: true   (assertion only)
+    - missing integrity fields when policy requires them
+    """
+    mid = candidate.get("module") or candidate.get("module_id") or "UNKNOWN"
+
+    # Reject pure assertion
+    if "integrity_verified" in candidate and candidate.get("integrity_verified") is True:
+        # Assertion alone is never sufficient
+        if not (
+            (candidate.get("expected_commit") and candidate.get("actual_commit"))
+            or (candidate.get("expected_contract_sha256") and candidate.get("actual_contract_sha256"))
+        ):
+            return halt(
+                mid,
+                "INTEGRITY_ASSERTED_ONLY",
+                "derived comparison (commit and/or contract hash)",
+                "integrity_verified=True without comparison fields",
+            )
+
+    expected_commit = candidate.get("expected_commit")
+    actual_commit = candidate.get("actual_commit")
+    expected_csha = candidate.get("expected_contract_sha256")
+    actual_csha = candidate.get("actual_contract_sha256")
+
+    # At least one comparison pair must be present and match
+    has_commit_pair = expected_commit is not None and actual_commit is not None
+    has_contract_pair = expected_csha is not None and actual_csha is not None
+
+    if not has_commit_pair and not has_contract_pair:
+        return halt(
+            mid,
+            "INTEGRITY_FIELDS_MISSING",
+            "expected/actual commit and/or contract hash pair",
+            "absent",
+        )
+
+    if has_commit_pair and expected_commit != actual_commit:
+        return halt(
+            mid,
+            "COMMIT_MISMATCH",
+            str(expected_commit),
+            str(actual_commit),
+            commit=str(actual_commit),
+        )
+
+    if has_contract_pair and expected_csha != actual_csha:
+        return halt(
+            mid,
+            "CONTRACT_HASH_MISMATCH",
+            str(expected_csha),
+            str(actual_csha),
+            contract_sha256=str(actual_csha),
+        )
+
     return {"ok": True}
 
 
-def validate_seal(candidate: dict, seal_record: Optional[dict] = None) -> dict:
-    return verify_seal(candidate, seal_record)
+def validate_seal(
+    candidate: dict,
+    seal_record: Optional[dict] = None,
+) -> dict:
+    return verify_seal(
+        candidate,
+        seal_record,
+        expected_contract_sha256=candidate.get("expected_contract_sha256"),
+        expected_commit=candidate.get("expected_commit") or candidate.get("actual_commit"),
+    )
 
 
 def validate_dependencies(
@@ -82,6 +149,22 @@ def validate(
     """Full validation sequence. Returns ADMIT evidence or HALT evidence."""
     version_registry = version_registry or {}
 
+    # Policy itself must be present and default to DENY
+    if not policy:
+        return halt(
+            candidate.get("module") or "UNKNOWN",
+            "MISSING_POLICY",
+            "policy object with default_action=DENY",
+            "absent",
+        )
+    if policy.get("default_action") != "DENY":
+        return halt(
+            candidate.get("module") or "UNKNOWN",
+            "POLICY_DEFAULT_NOT_DENY",
+            "DENY",
+            str(policy.get("default_action")),
+        )
+
     # 1. STRUCTURE
     result = validate_structure(candidate)
     if not result.get("ok"):
@@ -97,7 +180,7 @@ def validate(
     if not result.get("ok"):
         return result
 
-    # 4. INTEGRITY
+    # 4. INTEGRITY (derived / compared)
     result = validate_integrity(candidate)
     if not result.get("ok"):
         return result
@@ -131,11 +214,6 @@ def admit(
     seal_records: Optional[dict] = None,
 ) -> dict:
     """Public admission entry point."""
-    # Enforce default DENY from policy
-    if policy.get("default_action", "DENY") != "DENY":
-        # Even if misconfigured, we still run full validation
-        pass
-
     return validate(
         candidate=candidate,
         registry=registry,
