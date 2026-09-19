@@ -54,10 +54,12 @@ jobs:
           python -m py_compile admission/route_chain.py
           python -m py_compile admission/integrity.py
           python -m py_compile admission/__init__.py
+          python -m py_compile swi_core/crypto_audit.py
           python -m py_compile scripts/discover_workflows.py
           python -m py_compile scripts/verify_workflow_activation.py
           python -m py_compile scripts/inspect_workflow_security.py
           python -m py_compile scripts/verify_route_chain.py
+          python -m py_compile scripts/verify_crypto_audit.py
 
       - name: Schema validation
         run: |
@@ -67,6 +69,7 @@ jobs:
               'evidence/schema/admission_event.schema.json',
               'evidence/schema/halt_event.schema.json',
               'evidence/schema/route_record.schema.json',
+              'evidence/schema/crypto_receipt.schema.json',
           ]:
               with open(schema) as f:
                   json.load(f)
@@ -85,8 +88,14 @@ jobs:
       - name: Run workflow gate tests
         run: pytest tests/governance/ -v --tb=short
 
+      - name: Run crypto audit tests
+        run: pytest tests/crypto_audit/ -v --tb=short
+
       - name: Verify route chain
         run: python scripts/verify_route_chain.py
+
+      - name: Verify crypto audit
+        run: python scripts/verify_crypto_audit.py
 
       - name: Discover workflows (classify only)
         run: python scripts/discover_workflows.py
