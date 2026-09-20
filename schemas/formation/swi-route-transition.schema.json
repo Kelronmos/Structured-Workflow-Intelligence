@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-route-transition.schema.json",
+  "title": "SWI Route Transition (proposed)",
+  "description": "Transition with terminal justification (I-SIM-007). PROPOSED only.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transition_id",
+    "from_state",
+    "to_state",
+    "package_status",
+    "implementation_status",
+    "execution_authorized",
+    "undeclared_skip"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "from_state": { "type": "string", "minLength": 1 },
+    "to_state": { "type": "string", "minLength": 1 },
+    "pause_reason": { "type": ["string", "null"] },
+    "halt_reason": { "type": ["string", "null"] },
+    "quarantine_reason": { "type": ["string", "null"] },
+    "route_rule_id": { "type": ["string", "null"] },
+    "undeclared_skip": { "type": "boolean", "const": false },
+    "execution_authorized": { "type": "boolean", "const": false }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "to_state": { "const": "PAUSED" } },
+        "required": ["to_state"]
+      },
+      "then": {
+        "required": ["pause_reason"],
+        "properties": {
+          "pause_reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "to_state": { "const": "HALTED" } },
+        "required": ["to_state"]
+      },
+      "then": {
+        "required": ["halt_reason"],
+        "properties": {
+          "halt_reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "to_state": { "const": "QUARANTINED" } },
+        "required": ["to_state"]
+      },
+      "then": {
+        "required": ["quarantine_reason"],
+        "properties": {
+          "quarantine_reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  ]
+}

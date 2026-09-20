@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-route-delta.schema.json",
+  "title": "SWI Route Delta Record (proposed)",
+  "description": "Per-transition change record. PROPOSED / NOT_IMPLEMENTED. Not ROUTE_VERIFIED or execution authorization.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transition_id",
+    "from_state",
+    "to_state",
+    "state_before_hash",
+    "state_after_hash",
+    "package_status",
+    "implementation_status"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "from_state": { "type": "string", "minLength": 1 },
+    "to_state": { "type": "string", "minLength": 1 },
+    "state_before_hash": { "type": "string", "minLength": 1 },
+    "state_after_hash": { "type": "string", "minLength": 1 },
+    "changed_fields": { "type": "array", "items": { "type": "string" } },
+    "added_evidence": { "type": "array", "items": { "type": "string" } },
+    "removed_evidence": { "type": "array", "items": { "type": "string" } },
+    "new_risks": { "type": "array", "items": { "type": "string" } },
+    "resolved_risks": { "type": "array", "items": { "type": "string" } },
+    "new_scars": { "type": "array", "items": { "type": "string" } },
+    "authority_change": { "type": ["string", "null"] },
+    "jurisdiction_change": { "type": ["string", "null"] },
+    "rule_change": { "type": "array", "items": { "type": "string" } },
+    "human_review_change": { "type": "boolean" },
+    "execution_authorization_change": {
+      "type": "boolean",
+      "const": false
+    }
+  }
+}

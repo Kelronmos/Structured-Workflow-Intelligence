@@ -8,6 +8,7 @@
   "authorization_status": "NOT_AUTHORIZED",
   "execution_status": "NOT_EXECUTABLE",
   "applies_to_band": "FM-023-040",
+  "route_verified_implies_execution": false,
   "placement": {
     "documentation_repo": "Kelronmos/Structured-Workflow-Intelligence",
     "not_in_runtime": [
@@ -21,8 +22,18 @@
     {"id": "I-SIM-003", "statement": "SIMULATION SUCCESS ≠ EXECUTION AUTHORIZATION"},
     {"id": "I-SIM-004", "statement": "Downstream consequence may reclassify earlier decision; history not erased."},
     {"id": "I-SIM-005", "statement": "Later decision must not erase original evidence or rewrite history."},
-    {"id": "I-SIM-006", "statement": "Law, policy, ethics, common-sense, risk, SCAR, institutional authority remain separately identifiable."}
+    {"id": "I-SIM-006", "statement": "Law, policy, ethics, common-sense, risk, SCAR, institutional authority remain separately identifiable."},
+    {"id": "I-SIM-007", "statement": "Terminal state must be justified by evidence, control condition, and transition; label alone is not evidence."},
+    {"id": "I-SIM-008", "statement": "No transition may skip a required formation path without an explicit, evidence-bound route rule."}
   ],
+  "terminal_states": {
+    "allowed": ["FM-040", "PAUSED", "HALTED", "QUARANTINED"],
+    "require_reason_fields": {
+      "PAUSED": "pause_reason",
+      "HALTED": "halt_reason",
+      "QUARANTINED": "quarantine_reason"
+    }
+  },
   "planes": [
     "technical",
     "scar_risk",
@@ -37,10 +48,15 @@
     "automatic_rejection",
     "automatic_approval"
   ],
+  "related_docs": [
+    "docs/formation/BIDIRECTIONAL_WHOLE_ROUTE_SIMULATION.md",
+    "docs/formation/ROUTE_INVARIANT_AND_VERIFICATION_GATE.md"
+  ],
   "non_claims": [
     "Control is not implemented as runtime.",
     "Does not produce legal or ethical determinations.",
     "Does not authorize execution.",
-    "Does not implement FM-023-040."
+    "Does not implement FM-023-040.",
+    "ROUTE_VERIFIED does not imply EXECUTION_AUTHORIZED."
   ]
 }

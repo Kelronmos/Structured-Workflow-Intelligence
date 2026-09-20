@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-route-verified.schema.json",
+  "title": "SWI ROUTE_VERIFIED Gate Result (proposed)",
+  "description": "ROUTE_VERIFIED true does not set execution_authorized. PROPOSED / NOT_IMPLEMENTED.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "package_status",
+    "implementation_status",
+    "route_verified",
+    "execution_authorized",
+    "checks"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "route_verified": { "type": "boolean" },
+    "execution_authorized": { "type": "boolean", "const": false },
+    "checks": {
+      "type": "object",
+      "required": [
+        "SOURCE_BOUND",
+        "EXACT_SHA_BOUND",
+        "PREDECESSOR_VALID",
+        "SUCCESSOR_VALID",
+        "NO_UNDECLARED_SKIP",
+        "BACKWARD_TRACE_COMPLETE",
+        "FORWARD_TRACE_COMPLETE",
+        "CONSEQUENCE_SIMULATED",
+        "SCAR_CHECKED",
+        "RISK_CHECKED",
+        "HUMAN_IMPACT_CHECKED",
+        "NORMATIVE_SOURCES_BOUND",
+        "APPLICABILITY_RECORDED",
+        "AUTHORITY_RECORDED",
+        "JURISDICTION_RECORDED",
+        "CONFLICTS_RECORDED",
+        "UNKNOWNS_PRESERVED",
+        "EVIDENCE_INTEGRITY_VALID",
+        "TAMPER_TESTED",
+        "REPLAYABLE",
+        "TERMINAL_JUSTIFIED"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "SOURCE_BOUND": { "type": "boolean" },
+        "EXACT_SHA_BOUND": { "type": "boolean" },
+        "PREDECESSOR_VALID": { "type": "boolean" },
+        "SUCCESSOR_VALID": { "type": "boolean" },
+        "NO_UNDECLARED_SKIP": { "type": "boolean" },
+        "BACKWARD_TRACE_COMPLETE": { "type": "boolean" },
+        "FORWARD_TRACE_COMPLETE": { "type": "boolean" },
+        "CONSEQUENCE_SIMULATED": { "type": "boolean" },
+        "SCAR_CHECKED": { "type": "boolean" },
+        "RISK_CHECKED": { "type": "boolean" },
+        "HUMAN_IMPACT_CHECKED": { "type": "boolean" },
+        "NORMATIVE_SOURCES_BOUND": { "type": "boolean" },
+        "APPLICABILITY_RECORDED": { "type": "boolean" },
+        "AUTHORITY_RECORDED": { "type": "boolean" },
+        "JURISDICTION_RECORDED": { "type": "boolean" },
+        "CONFLICTS_RECORDED": { "type": "boolean" },
+        "UNKNOWNS_PRESERVED": { "type": "boolean" },
+        "EVIDENCE_INTEGRITY_VALID": { "type": "boolean" },
+        "TAMPER_TESTED": { "type": "boolean" },
+        "REPLAYABLE": { "type": "boolean" },
+        "TERMINAL_JUSTIFIED": { "type": "boolean" }
+      }
+    }
+  }
+}
