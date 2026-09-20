@@ -1,97 +1,82 @@
 # Verification ladder & terminology (freeze)
 
-**Purpose:** Prevent over-claiming. The Main formation package is **not** formal verification of an implemented system.
+**Purpose:** Prevent over-claiming. Schema/negative-control ≠ formal verification of an implemented system. TLA+ MODEL_PASS ≠ runtime implementation.
 
-**Package status (unchanged):** `PROPOSED` / `NOT_IMPLEMENTED` · `proof_status: NONE` · `execution: NOT_EXECUTABLE`
+## Precise claims for current Main artifacts
 
-## Precise claim for current Main artifacts
-
-| Claim | Legitimate? |
-|-------|-------------|
-| Schema-level machine-checkable constraint verification | **Yes** (where schemas + verifiers exist) |
-| Negative-control verification (prohibited states rejected) | **Yes** (`NEGATIVE_CONTROL_RESULT = PASS` where recorded) |
-| Formal verification of an implemented simulator/route runtime | **No** |
-| Model checked / SMT-proven system | **No** (future) |
+| Claim | Status |
+|-------|--------|
+| Schema-level machine-checkable constraints | **Yes** (formation + simulation schemas) |
+| Negative-control verification | **PASS** (recorded) |
+| TLA+ **abstract** route model + TLC | **MODEL_PASS** (`formal/tla/`, commit lineage including `d1483964`) |
+| FM-023–040 **runtime** implementation | **NOT_IMPLEMENTED** |
 | Legal / ethical / production authorization | **No** |
 
-Prefer the phrase:
+Prefer:
 
-> Schema-level machine-checkable constraint verification / negative-control verification.
+> Schema-level constraint verification / negative-control verification  
+> and, separately, **finite-model TLC verification** of an abstract TLA+ route machine.
 
-Avoid calling the current result simply “formal verification.”
+Do not collapse either into “the SWI system is formally verified.”
 
-## Status ledger
+## Status ledger (reconciled)
 
 ```text
 DOCUMENTED
     ↓
 SCHEMA-CONSTRAINED
     ↓
-NEGATIVE-CONTROL VERIFIED          ← Main formation package is here
+NEGATIVE-CONTROL VERIFIED          ← formation + simulation packages
     ↓
-[FORMAL MODEL CONSTRUCTION]        ← future construction repo only
+FORMAL MODEL (abstract TLA+)       ← STARTED: formal/tla/
     ↓
-MODEL CHECKED
+MODEL CHECKED (finite abstract)    ← MODEL_PASS recorded; mutations COUNTEREXAMPLE
     ↓
-[IMPLEMENTATION]
+[IMPLEMENTATION]                   ← NOT STARTED (runtime)
     ↓
-CONTRACT VERIFIED
+IMPLEMENTATION VERIFICATION
     ↓
-SYMBOLIC / ADVERSARIAL VERIFIED
-    ↓
-RUNTIME MONITORED
-    ↓
-INDEPENDENTLY RECHECKED
+INDEPENDENT VERIFICATION
 ```
 
-## What each level may claim
-
-| Level | Legitimate claim |
-|-------|------------------|
-| Schema validation | Data conforms to structural constraints |
-| Negative controls | Selected prohibited states are rejected |
-| Model checking | All reachable states **in the defined model** satisfy specified properties |
-| SMT / symbolic | No counterexample **within the encoding** (e.g. UNSAT) |
-| Contract verification | Specified functions satisfy pre/postconditions |
-| Theorem proving | Propositions proven under stated axioms |
-| Independent verification | Separate party reproduces/checks the result |
-
-## Future formal properties (construction repo only — not claimed here)
-
-P1 `ROUTE_VERIFIED(x) → ¬EXECUTION_AUTHORIZED(x)`  
-P2 terminal ∈ {PAUSED, HALTED, QUARANTINED} → reason ≠ ∅ ∧ evidence_bound  
-P3 skip(a,b) → explicit route rule ∧ evidence-bound  
-P4 UNKNOWN → ¬SAFE ∧ ¬LEGAL ∧ ¬APPROVED  
-P5 authority non-expansion without explicit capability  
-P6 unresolved mandatory condition → ¬EXECUTION_AUTHORIZED  
-P7 evidence removed → route-delta.removed_evidence ≠ ∅  
-P8 SCAR → ¬ automatic ILLEGAL / GUILTY / APPROVED  
-
-Solver target form: `EXISTS prohibited_condition` → desire **UNSAT** under stated assumptions. **SAT** is useful (counterexample), not a failure to hide.
-
-## Even future MODEL_CHECK = PASS still means
+## Package flags (unchanged intent)
 
 ```text
-property holds within model + assumptions + encoding
-  ≠ real-world software correct
-  ≠ legal / ethical / secure / safe / authorized / production-ready
+PROPOSED / NOT_IMPLEMENTED     (runtime FM band)
+proof_status: NONE             (no system-level proof claim)
+execution: NOT_EXECUTABLE
+negative_control: PASS
+formal_model_construction: STARTED (abstract only)
+tla_model_status: MODEL_PASS   (within MaxStep=26 model + assumptions)
 ```
 
-## Freeze pointer
+## Evidence layers stay separate
+
+```text
+Schema constraint
+    ≠ negative-control verification
+    ≠ TLA+ model verification
+    ≠ implementation verification
+    ≠ legal determination
+    ≠ ethical determination
+    ≠ institutional authority
+    ≠ execution authorization
+```
+
+## If TLC = PASS (current abstract model)
+
+Bounded statement only:
+
+> The specified invariants hold for the explored finite model under its recorded constants, abstractions, and assumptions.
+
+Does **not** promote Main package, V1, or V2 to implemented, sealed, legal, or execution-authorized.
+
+## Pointers
 
 | Artifact | Role |
 |----------|------|
-| FM-023–040 inventory + five-axis schemas | DOCUMENTED / SCHEMA-CONSTRAINED |
-| Simulation + route invariant package | DOCUMENTED / SCHEMA-CONSTRAINED |
-| `verify_formation_package.py` | NEGATIVE-CONTROL (inventory/axes) |
-| `verify_simulation_control_negative.py` | NEGATIVE-CONTROL (simulation/route schemas) |
+| `docs/formation/*` | Design + schemas + negative controls |
+| `formal/tla/` | Abstract TLA+ model + MutA–F + TLC result |
+| `formal/tla/TLA_MODEL_CHECK_RESULT.json` | MODEL_PASS evidence object |
 
-V1 FM-001–013 and V2 M11–M22 are **not** altered by this package.
-
-```text
-PROPOSED / NOT_IMPLEMENTED
-proof_status: NONE
-execution: NOT_EXECUTABLE
-negative_control: PASS (where reports exist)
-formal model construction: NOT STARTED on Main
-```
+V1 FM-001–013 and V2 M11–M22 remain independent.
