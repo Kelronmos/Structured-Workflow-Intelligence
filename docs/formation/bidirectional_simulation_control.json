@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0.0",
+  "control_id": "BIDIRECTIONAL_WHOLE_ROUTE_SIMULATION",
+  "package_status": "PROPOSED",
+  "implementation_status": "NOT_IMPLEMENTED",
+  "proof_status": "NONE",
+  "seal_status": "NOT_APPLICABLE",
+  "authorization_status": "NOT_AUTHORIZED",
+  "execution_status": "NOT_EXECUTABLE",
+  "applies_to_band": "FM-023-040",
+  "placement": {
+    "documentation_repo": "Kelronmos/Structured-Workflow-Intelligence",
+    "not_in_runtime": [
+      "Kelronmos/SWI-V1-Module-1-10",
+      "Kelronmos/SWI-V2-Modules-11-22"
+    ]
+  },
+  "invariants": [
+    {"id": "I-SIM-001", "statement": "No forward transition verified without evaluation of provenance, state, consequences, rules, SCAR, authority, risk/impact (when pipe exists)."},
+    {"id": "I-SIM-002", "statement": "UNKNOWN ≠ SAFE ≠ LEGAL ≠ ETHICAL ≠ AUTHORIZED ≠ APPROVED"},
+    {"id": "I-SIM-003", "statement": "SIMULATION SUCCESS ≠ EXECUTION AUTHORIZATION"},
+    {"id": "I-SIM-004", "statement": "Downstream consequence may reclassify earlier decision; history not erased."},
+    {"id": "I-SIM-005", "statement": "Later decision must not erase original evidence or rewrite history."},
+    {"id": "I-SIM-006", "statement": "Law, policy, ethics, common-sense, risk, SCAR, institutional authority remain separately identifiable."}
+  ],
+  "planes": [
+    "technical",
+    "scar_risk",
+    "human_ethical",
+    "normative_legal",
+    "institutional",
+    "cross_jurisdictional"
+  ],
+  "scar_meanings_forbidden": [
+    "automatic_guilt",
+    "automatic_illegality",
+    "automatic_rejection",
+    "automatic_approval"
+  ],
+  "non_claims": [
+    "Control is not implemented as runtime.",
+    "Does not produce legal or ethical determinations.",
+    "Does not authorize execution.",
+    "Does not implement FM-023-040."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-simulation-finding.schema.json",
+  "title": "SWI Simulation Finding (proposed)",
+  "description": "PROPOSED only. Valid JSON is not a legal, ethical, or execution determination.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "transition_id",
+    "package_status",
+    "implementation_status",
+    "execution_authorized",
+    "planes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "transition_id": { "type": "string", "minLength": 1 },
+    "from_path": { "type": "string", "pattern": "^FM-0(2[3-9]|3[0-9]|40)$" },
+    "to_path": { "type": "string", "pattern": "^FM-0(2[3-9]|3[0-9]|40)$" },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "legal_status": {
+      "type": "string",
+      "enum": ["UNKNOWN", "NOT_ASSESSED", "POTENTIALLY_APPLICABLE", "CONFLICT_DETECTED", "INSUFFICIENT_SOURCE"]
+    },
+    "applicability": {
+      "type": "string",
+      "enum": ["UNKNOWN", "NOT_ASSESSED", "POTENTIALLY_APPLICABLE", "NOT_APPLICABLE", "CONFLICT_DETECTED"]
+    },
+    "requirement_strength": { "type": ["string", "null"] },
+    "evidence_basis": { "type": "array", "items": { "type": "string" } },
+    "conflicts": { "type": "array", "items": { "type": "string" } },
+    "uncertainties": { "type": "array", "items": { "type": "string" } },
+    "human_review_required": { "type": "boolean" },
+    "execution_authorized": {
+      "type": "boolean",
+      "const": false,
+      "description": "Must remain false while control is NOT_IMPLEMENTED."
+    },
+    "common_sense": {
+      "type": "string",
+      "enum": ["OBSERVATION", "WARNING", "REVIEW_REQUIRED", "UNKNOWN"]
+    },
+    "ethics_observation": {
+      "type": "string",
+      "enum": ["OBSERVATION", "WARNING", "REVIEW_REQUIRED", "UNKNOWN"]
+    },
+    "scar_signal": {
+      "type": "string",
+      "enum": ["NONE", "RECORD", "ESCALATE", "HUMAN_REVIEW", "HALT", "UNKNOWN"]
+    },
+    "planes": {
+      "type": "object",
+      "required": [
+        "technical",
+        "scar_risk",
+        "human_ethical",
+        "normative_legal",
+        "institutional",
+        "cross_jurisdictional"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "technical": { "$ref": "#/$defs/planeResult" },
+        "scar_risk": { "$ref": "#/$defs/planeResult" },
+        "human_ethical": { "$ref": "#/$defs/planeResult" },
+        "normative_legal": { "$ref": "#/$defs/planeResult" },
+        "institutional": { "$ref": "#/$defs/planeResult" },
+        "cross_jurisdictional": { "$ref": "#/$defs/planeResult" }
+      }
+    }
+  },
+  "$defs": {
+    "planeResult": {
+      "type": "object",
+      "required": ["state"],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["NOT_ASSESSED", "UNKNOWN", "NO_MATERIAL_ISSUE", "ISSUE_DETECTED", "CONFLICT_DETECTED", "REVIEW_REQUIRED"]
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

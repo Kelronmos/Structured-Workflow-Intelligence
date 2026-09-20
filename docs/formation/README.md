@@ -7,8 +7,15 @@
 | [FM_023_040_FORMATION_PATH_INVENTORY.md](FM_023_040_FORMATION_PATH_INVENTORY.md) | Authoritative path map |
 | [fm_023_040_inventory.json](fm_023_040_inventory.json) | Machine index |
 | [../../schemas/formation/](../../schemas/formation/) | Five-axis + path schemas |
+| [NEGATIVE_CONTROL_VERIFICATION.md](NEGATIVE_CONTROL_VERIFICATION.md) | Package challenge report |
 
-This package does **not** implement Sandbox, SCAR, SCARMATIC, or authority execution.  
-It does **not** seal, authorize, or prove any formation path.
+## Proposed controls (not implementation)
 
-V1 remains FM-001–013. V2 remains M11–M22. Do not place FM-023–040 implementation in V1.
+| Doc | Status |
+|-----|--------|
+| [BIDIRECTIONAL_WHOLE_ROUTE_SIMULATION.md](BIDIRECTIONAL_WHOLE_ROUTE_SIMULATION.md) | PROPOSED / NOT_IMPLEMENTED |
+| [bidirectional_simulation_control.json](bidirectional_simulation_control.json) | Machine index |
+
+This package does **not** implement Sandbox, SCAR, SCARMATIC, simulation pipe, or authority execution.  
+Simulation success ≠ execution authorization.  
+V1 remains FM-001–013. V2 remains M11–M22.
