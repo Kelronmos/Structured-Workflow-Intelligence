@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0.0",
+  "inventory_id": "FM-023-040",
+  "package_status": "PROPOSED",
+  "implementation_status": "NOT_IMPLEMENTED",
+  "proof_status": "NONE",
+  "seal_status": "NOT_APPLICABLE",
+  "authorization_status": "NOT_AUTHORIZED",
+  "execution_status": "NOT_EXECUTABLE",
+  "placement": {
+    "v1_fm_range": "FM-001..FM-013",
+    "v2_module_range": "M11..M22",
+    "this_band": "FM-023..FM-040",
+    "do_not_implement_in": ["Kelronmos/SWI-V1-Module-1-10"],
+    "proposed_home": "V3_construction_repository_or_docs_until_created"
+  },
+  "five_axes": [
+    {"id": "A1", "name": "integrity"},
+    {"id": "A2", "name": "truth"},
+    {"id": "A3", "name": "authority"},
+    {"id": "A4", "name": "path_closure"},
+    {"id": "A5", "name": "legal_compliance"}
+  ],
+  "paths": [
+    {"id": "FM-023", "name": "Transaction Intake", "primary_axes": ["A1"], "depends_on": [], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-024", "name": "Structure Validation", "primary_axes": ["A1"], "depends_on": ["FM-023"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-025", "name": "Evidence Binding", "primary_axes": ["A1"], "depends_on": ["FM-024"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-026", "name": "Sandbox Clone", "primary_axes": ["A1"], "depends_on": ["FM-025"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-027", "name": "Normative Mapping", "primary_axes": ["A5"], "depends_on": ["FM-026"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-028", "name": "Requirement Strength", "primary_axes": ["A5"], "depends_on": ["FM-027"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-029", "name": "Applicability", "primary_axes": ["A5"], "depends_on": ["FM-028"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-030", "name": "Risk Assessment", "primary_axes": [], "depends_on": ["FM-029"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-031", "name": "Safety / Consequence Simulation", "primary_axes": [], "depends_on": ["FM-030"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-032", "name": "Authority Determination", "primary_axes": ["A3"], "depends_on": ["FM-030", "FM-031"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-033", "name": "SCAR", "primary_axes": [], "depends_on": ["FM-032"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-034", "name": "SCARMATIC", "primary_axes": [], "depends_on": ["FM-033"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-035", "name": "Human / Authorized Review", "primary_axes": ["A3"], "depends_on": ["FM-034"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-036", "name": "Control Decision", "primary_axes": ["A3"], "depends_on": ["FM-035"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-037", "name": "Evidence Closure", "primary_axes": ["A1"], "depends_on": ["FM-036"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-038", "name": "Replay", "primary_axes": [], "depends_on": ["FM-037"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-039", "name": "Adversarial Verification", "primary_axes": [], "depends_on": ["FM-037", "FM-038"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"},
+    {"id": "FM-040", "name": "Independent Verification", "primary_axes": [], "depends_on": ["FM-039"], "status": "PROPOSED", "implementation_status": "NOT_IMPLEMENTED", "proof_status": "NONE"}
+  ],
+  "non_claims": [
+    "No path in this inventory is implemented by publication of this file.",
+    "No path is sealed, authorized, or executable by publication of this file.",
+    "Integrity of a future artifact does not imply truth, authority, path_closure, or legal_compliance."
+  ]
+}

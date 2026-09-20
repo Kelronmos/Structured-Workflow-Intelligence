@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-five-axis-separation.schema.json",
+  "title": "SWI Five-Axis Separation",
+  "description": "Data-contract enforcement of independent evaluation axes. PROPOSED contract only. Satisfying this schema does not constitute proof, seal, authorization, or implementation of any formation path.",
+  "type": "object",
+  "required": ["schema_version", "axes", "posture", "forbidden_implications"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "axes": {
+      "type": "object",
+      "required": ["A1", "A2", "A3", "A4", "A5"],
+      "additionalProperties": false,
+      "properties": {
+        "A1": { "$ref": "#/$defs/axisDeclaration" },
+        "A2": { "$ref": "#/$defs/axisDeclaration" },
+        "A3": { "$ref": "#/$defs/axisDeclaration" },
+        "A4": { "$ref": "#/$defs/axisDeclaration" },
+        "A5": { "$ref": "#/$defs/axisDeclaration" }
+      }
+    },
+    "posture": {
+      "type": "object",
+      "required": ["A1", "A2", "A3", "A4", "A5"],
+      "additionalProperties": false,
+      "properties": {
+        "A1": { "$ref": "#/$defs/axisPosture" },
+        "A2": { "$ref": "#/$defs/axisPosture" },
+        "A3": { "$ref": "#/$defs/axisPosture" },
+        "A4": { "$ref": "#/$defs/axisPosture" },
+        "A5": { "$ref": "#/$defs/axisPosture" }
+      }
+    },
+    "forbidden_implications": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/forbiddenImplication" }
+    }
+  },
+  "$defs": {
+    "axisDeclaration": {
+      "type": "object",
+      "required": ["id", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "enum": ["A1", "A2", "A3", "A4", "A5"] },
+        "name": {
+          "type": "string",
+          "enum": ["integrity", "truth", "authority", "path_closure", "legal_compliance"]
+        }
+      }
+    },
+    "axisPosture": {
+      "type": "object",
+      "required": ["state"],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["NOT_ASSESSED", "NOT_CLAIMED", "CLAIMED_UNPROVEN", "PROPOSED_ONLY"],
+          "description": "No ESTABLISHED or SEALED values in this schema version."
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "forbiddenImplication": {
+      "type": "object",
+      "required": ["from_axis", "to_axis", "rule"],
+      "additionalProperties": false,
+      "properties": {
+        "from_axis": { "type": "string", "enum": ["A1", "A2", "A3", "A4", "A5"] },
+        "to_axis": { "type": "string", "enum": ["A1", "A2", "A3", "A4", "A5"] },
+        "rule": { "type": "string", "const": "MUST_NOT_INFER" }
+      }
+    }
+  }
+}

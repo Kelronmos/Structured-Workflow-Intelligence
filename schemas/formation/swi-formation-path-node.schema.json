@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-formation-path-node.schema.json",
+  "title": "SWI Formation Path Node (FM-023..040 band)",
+  "description": "Valid JSON under this schema is NOT implementation, test evidence, seal, or authorization.",
+  "type": "object",
+  "required": ["id", "name", "status", "implementation_status", "proof_status", "primary_axes", "depends_on"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "pattern": "^FM-0(2[3-9]|3[0-9]|40)$" },
+    "name": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "proof_status": { "type": "string", "const": "NONE" },
+    "seal_status": { "type": "string", "const": "NOT_APPLICABLE" },
+    "primary_axes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["A1", "A2", "A3", "A4", "A5"] },
+      "uniqueItems": true
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^FM-0(2[3-9]|3[0-9]|40)$" },
+      "uniqueItems": true
+    },
+    "notes": { "type": "string" }
+  }
+}

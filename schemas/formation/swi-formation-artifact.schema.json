@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://swi.local/schemas/formation/swi-formation-artifact.schema.json",
+  "title": "SWI Formation Artifact Envelope (proposed)",
+  "description": "Envelope requiring explicit five-axis posture. Valid structure does not assess integrity, truth, authority, path closure, or legal compliance.",
+  "type": "object",
+  "required": ["schema_version", "artifact_id", "formation_path_id", "axis_posture", "package_status", "implementation_status"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "artifact_id": { "type": "string", "minLength": 1 },
+    "formation_path_id": {
+      "type": "string",
+      "pattern": "^FM-0(2[3-9]|3[0-9]|40)$"
+    },
+    "package_status": { "type": "string", "const": "PROPOSED" },
+    "implementation_status": { "type": "string", "const": "NOT_IMPLEMENTED" },
+    "payload": { "type": "object" },
+    "axis_posture": {
+      "type": "object",
+      "required": ["A1", "A2", "A3", "A4", "A5"],
+      "additionalProperties": false,
+      "properties": {
+        "A1": { "$ref": "#/$defs/posture" },
+        "A2": { "$ref": "#/$defs/posture" },
+        "A3": { "$ref": "#/$defs/posture" },
+        "A4": { "$ref": "#/$defs/posture" },
+        "A5": { "$ref": "#/$defs/posture" }
+      }
+    },
+    "bindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "integrity_reference": {
+          "type": "string",
+          "description": "Optional hash reference. Presence does not set A2–A5."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "posture": {
+      "type": "object",
+      "required": ["state"],
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": ["NOT_ASSESSED", "NOT_CLAIMED", "CLAIMED_UNPROVEN", "PROPOSED_ONLY"]
+        }
+      }
+    }
+  }
+}
