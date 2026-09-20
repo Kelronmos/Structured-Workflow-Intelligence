@@ -20,7 +20,8 @@
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run",
     "swi:ci": "tsx scripts/swi-ci-check.ts",
-    "swi:lint": "eslint . --rule 'swi/no-index-keys: error'"
+    "swi:lint": "eslint . --rule 'swi/no-index-keys: error'",
+    "swi:seal": "node scripts/swi-seal.mjs"
   },
   "dependencies": {
     "@google/genai": "^1.51.0",
