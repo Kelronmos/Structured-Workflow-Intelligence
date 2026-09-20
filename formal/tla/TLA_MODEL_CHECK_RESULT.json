@@ -1,0 +1,45 @@
+{
+  "verification_type": "TLA_PLUS_MODEL_CHECK",
+  "repository": "Structured-Workflow-Intelligence",
+  "source_commits": [
+    "77f4761cc81692ccdaf2173dfff7ea05e72a6505",
+    "4348cfa466a2e0b72210ef4c9de66fd195b368c8",
+    "57f0d9680326c1606f51670a71081641938abbb1",
+    "6f943a1f6d4972409f789a4a1886cb613709bb01"
+  ],
+  "model_status": "MODEL_PASS",
+  "positive_spec": "formal/tla/route_model/SWIRouteModel.tla",
+  "constants": { "MaxStep": 26 },
+  "scope": "finite abstract route model (steps 23..26 + terminals)",
+  "runtime_implementation": "NOT_IMPLEMENTED",
+  "execution_authorized": false,
+  "package_status": "PROPOSED",
+  "proof_status": "NONE",
+  "invariants_checked": [
+    "Safety",
+    "Inv_TerminalJustified",
+    "Inv_NoExecutionAuth",
+    "Inv_TypeOK"
+  ],
+  "positive_run": {
+    "result": "No error has been found",
+    "states_generated": 60,
+    "distinct_states": 26,
+    "search_depth": 3
+  },
+  "mutations": {
+    "MutA_skip_without_route_rule": "COUNTEREXAMPLE",
+    "MutB_halt_empty_reason": "COUNTEREXAMPLE",
+    "MutC_pause_empty_reason": "COUNTEREXAMPLE",
+    "MutD_quarantine_empty_reason": "COUNTEREXAMPLE",
+    "MutE_execution_authorized_true": "COUNTEREXAMPLE",
+    "MutF_silent_authority_increase": "COUNTEREXAMPLE"
+  },
+  "abstractions": [
+    "evidence as bound/unbound boolean",
+    "reasons as finite tokens {0,1,2}",
+    "MaxStep=26 finite band",
+    "legal rules not modeled as executable law"
+  ],
+  "interpretation": "MODEL_PASS means invariants hold in this finite TLA+ model. Does not implement runtime or authorize execution."
+}
