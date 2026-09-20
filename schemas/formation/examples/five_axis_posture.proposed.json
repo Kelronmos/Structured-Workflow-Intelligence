@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "package_status": "PROPOSED",
+  "implementation_status": "NOT_IMPLEMENTED",
+  "axes": {
+    "A1": {"id": "A1", "name": "integrity"},
+    "A2": {"id": "A2", "name": "truth"},
+    "A3": {"id": "A3", "name": "authority"},
+    "A4": {"id": "A4", "name": "path_closure"},
+    "A5": {"id": "A5", "name": "legal_compliance"}
+  },
+  "posture": {
+    "A1": {"state": "NOT_ASSESSED"},
+    "A2": {"state": "NOT_ASSESSED"},
+    "A3": {"state": "NOT_ASSESSED"},
+    "A4": {"state": "NOT_ASSESSED"},
+    "A5": {"state": "NOT_ASSESSED"}
+  },
+  "forbidden_implications": [
+    {"from_axis": "A1", "to_axis": "A2", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A1", "to_axis": "A3", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A1", "to_axis": "A4", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A1", "to_axis": "A5", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A2", "to_axis": "A1", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A2", "to_axis": "A3", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A2", "to_axis": "A4", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A2", "to_axis": "A5", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A3", "to_axis": "A1", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A3", "to_axis": "A2", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A3", "to_axis": "A4", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A3", "to_axis": "A5", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A4", "to_axis": "A1", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A4", "to_axis": "A2", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A4", "to_axis": "A3", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A4", "to_axis": "A5", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A5", "to_axis": "A1", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A5", "to_axis": "A2", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A5", "to_axis": "A3", "rule": "MUST_NOT_INFER"},
+    {"from_axis": "A5", "to_axis": "A4", "rule": "MUST_NOT_INFER"}
+  ]
+}
